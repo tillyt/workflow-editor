@@ -12,11 +12,11 @@
       templateUrl: "app/components/flowchart/flowchart.tmpl.html",
       replace: true,
       scope: {
-        chart: "=chart"
+        model: "="
       },
       bindToController: true,
       controller: 'FlowchartController',
-      controllerAs: 'chart'
+      controllerAs: 'vm'
     };
 
 

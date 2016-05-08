@@ -42,19 +42,7 @@
     }
 
 
-    vm.width = function (node) {
-      var num_inputs = Object.keys(node.interface.inputs).length;
-      var num_chars_in_name = node.interface.name.length;
-      var num_outputs = Object.keys(node.interface.outputs).length;
-      var max_num_connectors = Math.max(num_inputs, num_outputs);
-      var text_width = Math.round(num_chars_in_name * 11);
-      var connector_width = 15 + max_num_connectors * 15;
-      if (connector_width > text_width) {
-        return (14 * (max_num_connectors - 1)) + 56;
-      } else {
-        return text_width;
-      }
-    };
+    
 
 
     // keyboard shortcuts

@@ -1,0 +1,171 @@
+// COLORS
+$main-bg-color: #ECECEC;
+$text-color: #7A7A7A;
+$accent-color: rgb(0, 150, 136);
+$warning-color: #E75753;
+
+// VARIABLES
+$left-sidenav-width: 110px; //250px;
+$widget-height: 310px;
+$font-weight-bold: 600;
+$font-size-large: 22px;
+
+.node-type {
+  background-color: #ececec;
+  color: #ffffff;
+}
+
+.svg-container {
+  g {
+    padding: 10px;
+    position: relative;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    cursor: crosshair;
+    text-rendering: optimizeLegibility;
+    rect {
+      cursor: move;
+      padding: 10px;
+    }
+  }
+}
+
+.draggable-object {
+  cursor: move !important; /* fallback: no `url()` support or images disabled */
+  cursor: -webkit-grab !important; /* Chrome 1-21, Safari 4+ */
+  cursor: -moz-grab !important; /* Firefox 1.5-26 */
+  cursor: grab !important; /* W3C standards syntax, should come least */
+}
+
+.draggable-object:active {
+  cursor: -webkit-grabbing !important;
+  cursor: -moz-grabbing !important;
+  cursor: grabbing !important;
+}
+
+/*
+Styles for nodes and connectors.
+*/
+
+.node-rect {
+  stroke: black;
+  stroke-width: 0.25;
+}
+
+.node-rect:hover {
+  stroke: black;
+  stroke-width: 1;
+  cursor: move;
+}
+
+.selected-node-rect {
+  stroke: black;
+  stroke-width: 2;
+}
+
+.connector-circle {
+  fill: white;
+  stroke: black;
+  stroke-width: 0.25;
+}
+
+.connector-circle:hover {
+  fill: white;
+  stroke: black;
+  stroke-width: 2;
+  cursor: crosshair;
+}
+
+.node-name {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.connector-name {
+  font-size: 10px;
+}
+
+/*
+Style for connections.
+*/
+
+.connection {
+}
+
+.connection-line {
+  stroke: gray;
+  stroke-width: 1;
+  fill: transparent;
+}
+
+.connection-line:hover {
+  stroke: gray;
+  stroke-width: 2;
+  fill: transparent;
+}
+
+.selected-connection-line {
+  stroke: red;
+  stroke-width: 4;
+  fill: transparent;
+}
+
+.connection-endpoint {
+  fill: gray;
+}
+
+.selected-connection-endpoint {
+  fill: red;
+}
+
+.mouseover-connection-endpoint {
+  fill: gray;
+}
+
+.connection-name {
+  fill: black;
+}
+
+.selected-connection-name {
+  fill: red;
+}
+
+.mouseover-connection-name {
+  fill: gray;
+}
+
+/*
+Style for the connection being dragged out.
+*/
+
+.dragging-connection {
+  pointer-events: none;
+}
+
+.dragging-connection-line {
+  stroke: gray;
+  stroke-width: 3;
+  fill: transparent;
+}
+
+.dragging-connection-endpoint {
+  fill: gray;
+}
+
+/*
+The element (in this case the SVG element) that contains the draggable elements.
+*/
+
+.draggable-container {
+  border: solid 1px lightgrey;
+}
+
+/*
+Drag selection rectangle.
+*/
+
+.drag-selection-rect {
+  stroke: grey;
+  stroke-width: 2;
+  fill: transparent;
+}

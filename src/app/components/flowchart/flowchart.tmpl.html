@@ -1,180 +1,256 @@
 <svg
-  class="draggable-container"
   xmlns="http://www.w3.org/2000/svg"
-  ng-mousedown="mouseDown($event)"
-  ng-mousemove="mouseMove($event)"
+  id="svg-container"
+  x="0"
+  y="0"
+  width="100%"
+  height="900px"
 >
-  <defs>
-    <linearGradient
-      spreadMethod="pad"
-      y2="0"
-      x2="0"
-      y1="1"
-      x1="0"
-      id="nodeBackgroundGradient"
-    >
-      <stop
-        offset="0"
-        stop-opacity="0.99609"
-        stop-color="#56aaff"
-      />
-      <stop
-        offset="0.63934"
-        stop-opacity="0.99219"
-        stop-color="#d0d0e5"
-      />
-    </linearGradient>
-  </defs>
+
   <g
-    ng-repeat="node in chart.nodes"
-    ng-mousedown="nodeMouseDown($event, node)"
-    ng-attr-transform="translate({{node.x()}}, {{node.y()}})"
+    ng-repeat="(id, node) in vm.model.nodes"
+    ng-attr-transform="translate({{node.x}}, {{node.y}})"
+    ng-attr-x="{{node.x}}"
+    ng-attr-y="{{node.y}}"
+    ng-attr-id="{{node.id}}"
   >
+
     <rect
-      ng-attr-class="{{node.selected() && 'selected-node-rect' || (node == mouseOverNode && 'mouseover-node-rect' || 'node-rect')}}"
-      ry="10"
-      rx="10"
+      ry="8"
+      rx="6"
       x="0"
       y="0"
-      ng-attr-width="{{node.width()}}"
-      ng-attr-height="{{node.height()}}"
-      fill="url(#nodeBackgroundGradient)"
+      ng-attr-width="{{vm.width(node)}}"
+      ng-attr-height="{{vm.nodeHeight}}"
+      fill="#cccccc"
+      ng-mousedown="vm.handleClick($event, node)"
+      ng-class="vm.selectedNode == node ? 'selected-node-rect' : 'node-rect'"
     >
+
 
     </rect>
 
     <text
-      ng-attr-x="{{node.width()/2}}"
-      y="25"
+      ng-attr-x="{{vm.width(node)/2}}"
+      ng-attr-y="{{vm.nodeHeight/2}}"
       text-anchor="middle"
       alignment-baseline="middle"
+      class="node-name"
     >
-      {{node.name()}}
+
+      {{node.interface.name}}
     </text>
 
     <g
-      ng-repeat="connector in node.inputConnectors"
-      ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
-      class="connector input-connector"
+      ng-repeat="(input, value) in node.interface.inputs"
+      class="connector input-connector" ng-init="showText=false"
     >
       <text
-        ng-attr-x="{{connector.x() + 20}}"
-        ng-attr-y="{{connector.y()}}"
-        text-anchor="left"
+        ng-if="showText"
+        y="10"
+        ng-attr-x="{{28 + ($index*14)}}"
+        text-anchor="middle"
         alignment-baseline="middle"
+        class="connector-name"
       >
-        {{connector.name()}}
+        {{input}}
       </text>
 
       <circle
-        ng-attr-class="{{connector == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
-        ng-attr-r="{{connectorSize}}"
-        ng-attr-cx="{{connector.x()}}"
-        ng-attr-cy="{{connector.y()}}"
+        r="4"
+        ng-attr-cx="{{28 + ($index*14)}}"
+        cy="0"
+        class="connector-circle"
+        ng-mouseenter="showText=true"
+        ng-mouseleave="showText=false"
       />
     </g>
 
     <g
-      ng-repeat="connector in node.outputConnectors"
-      ng-mousedown="connectorMouseDown($event, node, connector, $index, false)"
-      class="connector output-connector"
+      ng-repeat="(output, value) in node.interface.outputs"
+      class="connector output-connector" ng-init="showText=false"
     >
       <text
-        ng-attr-x="{{connector.x() - 20}}"
-        ng-attr-y="{{connector.y()}}"
-        text-anchor="end"
+        ng-if="showText"
+        ng-attr-x="{{28 + ($index*14)}}"
+        ng-attr-y="{{vm.nodeHeight-10}}"
+        text-anchor="middle"
         alignment-baseline="middle"
+        class="connector-name"
       >
-        {{connector.name()}}
+        {{output}}
       </text>
 
       <circle
-        ng-attr-class="{{connector == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
-        ng-attr-r="{{connectorSize}}"
-        ng-attr-cx="{{connector.x()}}"
-        ng-attr-cy="{{connector.y()}}"
+        r="4"
+        ng-attr-cx="{{28 + ($index*14)}}"
+        ng-attr-cy="{{vm.nodeHeight}}"
+        class="connector-circle"
+        ng-mouseenter="showText=true"
+        ng-mouseleave="showText=false"
       />
     </g>
   </g>
 
-  <g>
-    <g
-      ng-repeat="connection in chart.connections"
-      class="connection"
-      ng-mousedown="connectionMouseDown($event, connection)"
-    >
-      <path
-        ng-attr-class="{{connection.selected() && 'selected-connection-line' || (connection == mouseOverConnection && 'mouseover-connection-line' || 'connection-line')}}"
-        ng-attr-d="M {{connection.sourceCoordX()}}, {{connection.sourceCoordY()}}
-                     C {{connection.sourceTangentX()}}, {{connection.sourceTangentY()}}
-                       {{connection.destTangentX()}}, {{connection.destTangentY()}}
-                       {{connection.destCoordX()}}, {{connection.destCoordY()}}"
-      >
-      </path>
 
-      <text
-        ng-attr-class="{{connection.selected() && 'selected-connection-name' || (connection == mouseOverConnection && 'mouseover-connection-name' || 'connection-name')}}"
-        ng-attr-x="{{connection.middleX()}}"
-        ng-attr-y="{{connection.middleY()}}"
-        text-anchor="middle"
-        alignment-baseline="middle"
-      >{{connection.name()}}</text>
 
-      <circle
-        ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"
-        r="5"
-        ng-attr-cx="{{connection.sourceCoordX()}}"
-        ng-attr-cy="{{connection.sourceCoordY()}}"
-      >
-      </circle>
 
-      <circle
-        ng-attr-class="{{connection.selected() && 'selected-connection-endpoint' || (connection == mouseOverConnection && 'mouseover-connection-endpoint' || 'connection-endpoint')}}"
-        r="5"
-        ng-attr-cx="{{connection.destCoordX()}}"
-        ng-attr-cy="{{connection.destCoordY()}}"
-      >
-      </circle>
-    </g>
+
+
+
+  <!--<g-->
+    <!--ng-repeat="(id, node) in vm.model.nodes"-->
+    <!--ng-attr-transform="translate({{node.x}}, {{node.y}})"-->
+    <!--draggable="vm.nodeDragOptions"-->
+    <!--ng-attr-x="{{node.x}}"-->
+    <!--ng-attr-y="{{node.y}}"-->
+    <!--ng-attr-id="{{node.id}}"-->
+  <!--&gt;-->
+
+    <!--<rect-->
+      <!--ry="8"-->
+      <!--rx="6"-->
+      <!--x="0"-->
+      <!--y="0"-->
+      <!--ng-attr-width="{{vm.width(node)}}"-->
+      <!--ng-attr-height="{{vm.nodeHeight}}"-->
+      <!--fill="#cccccc"-->
+      <!--ng-mousedown="vm.handleClick($event, node)"-->
+      <!--ng-class="vm.selectedNode == node ? 'selected-node-rect' : 'node-rect'"-->
+    <!--&gt;-->
+    <!--</rect>-->
+
+    <!--<text-->
+      <!--ng-attr-x="{{vm.width(node)/2}}"-->
+      <!--ng-attr-y="{{vm.nodeHeight/2}}"-->
+      <!--text-anchor="middle"-->
+      <!--alignment-baseline="middle"-->
+      <!--class="node-name"-->
+    <!--&gt;-->
+
+      <!--{{node.interface.name}}-->
+    <!--</text>-->
+
+    <!--<g-->
+      <!--ng-repeat="(input, value) in node.interface.inputs"-->
+      <!--class="connector input-connector" ng-init="showText=false"-->
+    <!--&gt;-->
+      <!--<text-->
+        <!--ng-if="showText"-->
+        <!--y="10"-->
+        <!--ng-attr-x="{{28 + ($index*14)}}"-->
+        <!--text-anchor="middle"-->
+        <!--alignment-baseline="middle"-->
+        <!--class="connector-name"-->
+      <!--&gt;-->
+        <!--{{input}}-->
+      <!--</text>-->
+
+      <!--<circle-->
+        <!--r="4"-->
+        <!--ng-attr-cx="{{28 + ($index*14)}}"-->
+        <!--cy="0"-->
+        <!--ng-class="input[input] == null ? 'connector-circle' : 'connector-circle-active'"-->
+        <!--ng-mouseenter="showText=true"-->
+        <!--ng-mouseleave="showText=false"-->
+      <!--/>-->
+    <!--</g>-->
+
+    <!--<g-->
+      <!--ng-repeat="(output, value) in node.interface.outputs"-->
+      <!--class="connector output-connector" ng-init="showText=false"-->
+    <!--&gt;-->
+
+      <!--<text-->
+        <!--ng-if="showText"-->
+        <!--ng-attr-x="{{28 + ($index*14)}}"-->
+        <!--ng-attr-y="{{vm.nodeHeight-10}}"-->
+        <!--text-anchor="middle"-->
+        <!--alignment-baseline="middle"-->
+        <!--class="connector-name"-->
+      <!--&gt;-->
+        <!--{{output}}-->
+      <!--</text>-->
+
+      <!--<circle-->
+        <!--r="4"-->
+        <!--ng-attr-cx="{{28 + ($index*14)}}"-->
+        <!--ng-attr-cy="{{vm.nodeHeight}}"-->
+        <!--ng-class="output[output] == null ? 'connector-circle' : 'connector-circle-active'"-->
+        <!--ng-mouseenter="showText=true"-->
+        <!--ng-mouseleave="showText=false"-->
+      <!--/>-->
+    <!--</g>-->
+  <!--</g>-->
+
+
+
+  <g
+  ng-repeat="edge in vm.model.edges"
+  class="edge"
+  >
+  <path
+  ng-attr-class="{{edge.selected() && 'selected-edge-line' || (edge == mouseOveredge && 'mouseover-edge-line' || 'edge-line')}}"
+  ng-attr-d="M {{edge.sourceCoordX()}}, {{edge.sourceCoordY()}}
+  C {{edge.sourceTangentX()}}, {{edge.sourceTangentY()}}
+  {{edge.destTangentX()}}, {{edge.destTangentY()}}
+  {{edge.destCoordX()}}, {{edge.destCoordY()}}"
+  >
+  </path>
+  <circle
+  ng-attr-class="{{edge.selected() && 'selected-edge-endpoint' || (edge == mouseOveredge && 'mouseover-edge-endpoint' || 'edge-endpoint')}}"
+  r="4"
+  ng-attr-cx="{{edge.sourceCoordX()}}"
+  ng-attr-cy="{{edge.sourceCoordY()}}"
+  >
+  </circle>
+
+  <circle
+  ng-attr-class="{{edge.selected() && 'selected-edge-endpoint' || (edge == mouseOveredge && 'mouseover-edge-endpoint' || 'edge-endpoint')}}"
+  r="4"
+  ng-attr-cx="{{edge.destCoordX()}}"
+  ng-attr-cy="{{edge.destCoordY()}}"
+  >
+  </circle>
+  </g>
   </g>
 
   <g
-    ng-if="draggingConnection"
+  ng-if="draggingedge"
   >
-    <path
-      class="dragging-connection dragging-connection-line"
-      ng-attr-d="M {{dragPoint1.x}}, {{dragPoint1.y}}
-                 C {{dragTangent1.x}}, {{dragTangent1.y}}
-                   {{dragTangent2.x}}, {{dragTangent2.y}}
-                   {{dragPoint2.x}}, {{dragPoint2.y}}"
-    >
-    </path>
+  <path
+  class="dragging-edge dragging-edge-line"
+  ng-attr-d="M {{vm.dragPoint1.x}}, {{vm.dragPoint1.y}}
+  C {{vm.dragTangent1.x}}, {{vm.dragTangent1.y}}
+  {{vm.dragTangent2.x}}, {{vm.dragTangent2.y}}
+  {{vm.dragPoint2.x}}, {{vm.dragPoint2.y}}"
+  >
+  </path>
 
-    <circle
-      class="dragging-connection dragging-connection-endpoint"
-      r="4"
-      ng-attr-cx="{{dragPoint1.x}}"
-      ng-attr-cy="{{dragPoint1.y}}"
-    >
-    </circle>
+  <circle
+  class="dragging-edge dragging-edge-endpoint"
+  r="4"
+  ng-attr-cx="{{dragPoint1.x}}"
+  ng-attr-cy="{{dragPoint1.y}}"
+  >
+  </circle>
 
-    <circle
-      class="dragging-connection dragging-connection-endpoint"
-      r="4"
-      ng-attr-cx="{{dragPoint2.x}}"
-      ng-attr-cy="{{dragPoint2.y}}"
-    >
-    </circle>
+  <circle
+  class="dragging-edge dragging-edge-endpoint"
+  r="4"
+  ng-attr-cx="{{dragPoint2.x}}"
+  ng-attr-cy="{{dragPoint2.y}}"
+  >
+  </circle>
   </g>
 
   <rect
-    ng-if="dragSelecting"
-    class="drag-selection-rect"
-    ng-attr-x="{{dragSelectionRect.x}}"
-    ng-attr-y="{{dragSelectionRect.y}}"
-    ng-attr-width="{{dragSelectionRect.width}}"
-    ng-attr-height="{{dragSelectionRect.height}}"
+  ng-if="dragSelecting"
+  class="drag-selection-rect"
+  ng-attr-x="{{dragSelectionRect.x}}"
+  ng-attr-y="{{dragSelectionRect.y}}"
+  ng-attr-width="{{dragSelectionRect.width}}"
+  ng-attr-height="{{dragSelectionRect.height}}"
   >
   </rect>
-
 </svg>

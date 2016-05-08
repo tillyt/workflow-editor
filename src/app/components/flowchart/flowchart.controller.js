@@ -5,15 +5,31 @@
     .module('workflowEditor')
     .controller('FlowchartController', FlowchartController);
 
-  function FlowchartController(dragging, $element, model) {
+  function FlowchartController(dragging, $element, $document, modelService) {
 
-    var chart = this;
+    var vm = this;
+
+    vm.nodeHeight = 70;
+
+    vm.width = function (node) {
+      var num_inputs = Object.keys(node.interface.inputs).length;
+      var num_chars_in_name = node.interface.name.length;
+      var num_outputs = Object.keys(node.interface.outputs).length;
+      var max_num_connectors = Math.max(num_inputs, num_outputs);
+      var text_width = Math.round(num_chars_in_name * 11);
+      var connector_width = 15 + max_num_connectors * 15;
+      if (connector_width > text_width) {
+        return (14 * (max_num_connectors - 1)) + 56;
+      } else {
+        return text_width;
+      }
+    };
 
 
-// jQuery's hasClass doesn't work for SVG, but this does!
-// takes an object obj and checks for class has
-// returns true if the class exits in obj, false otherwise
-    var hasClassSVG = function(obj, has) {
+    // jQuery's hasClass doesn't work for SVG, but this does!
+    // takes an object obj and checks for class has
+    // returns true if the class exits in obj, false otherwise
+    var hasClassSVG = function (obj, has) {
       var classes = obj.attr('class');
       if (!classes) {
         return false;
@@ -30,14 +46,12 @@
     };
 
 
-
-
     //
     // Init data-model variables.
     //
-    chart.draggingConnection = false;
-    chart.connectorSize = 10;
-    chart.dragSelecting = false;
+    vm.draggingConnection = false;
+    vm.connectorSize = 10;
+    vm.dragSelecting = false;
     /* Can use chart to test the drag selection rect.
      chart.dragSelectionRect = {
      x: 0,
@@ -50,65 +64,52 @@
     //
     // Reference to the connection, connector or node that the mouse is currently over.
     //
-    chart.mouseOverConnector = null;
-    chart.mouseOverConnection = null;
-    chart.mouseOverNode = null;
+    vm.mouseOverConnector = null;
+    vm.mouseOverConnection = null;
+    vm.mouseOverNode = null;
 
-    //
     // The class for connections and connectors.
-    //
-    chart.connectionClass = 'connection';
-    chart.connectorClass = 'connector';
-    chart.nodeClass = 'node';
+    vm.connectionClass = 'connection';
+    vm.connectorClass = 'connector';
+    vm.nodeClass = 'node';
 
-    //
     // Search up the HTML element tree for an element the requested class.
-    //
-    chart.searchUp = function (element, parentClass) {
+    vm.searchUp = function (element, parentClass) {
 
-      //
       // Reached the root.
-      //
       if (element == null || element.length == 0) {
         return null;
       }
 
-      //
       // Check if the element has the class that identifies it as a connector.
-      //
       if (hasClassSVG(element, parentClass)) {
-        //
         // Found the connector element.
-        //
         return element;
       }
 
-      //
       // Recursively search parent elements.
+      return vm.searchUp(element.parent(), parentClass);
+    };
+
+    // Hit test and retrieve node and connector that was hit at the specified coordinates.
+    //
+    vm.hitTest = function (clientX, clientY) {
+
       //
-      return chart.searchUp(element.parent(), parentClass);
+      // retrieve the element the mouse is currently over.
+      //
+      return $document.elementFromPoint(clientX, clientY);
     };
 
     //
     // Hit test and retreive node and connector that was hit at the specified coordinates.
     //
-    chart.hitTest = function (clientX, clientY) {
-
-      //
-      // Retreive the element the mouse is currently over.
-      //
-      return chart.document.elementFromPoint(clientX, clientY);
-    };
-
-    //
-    // Hit test and retreive node and connector that was hit at the specified coordinates.
-    //
-    chart.checkForHit = function (mouseOverElement, whichClass) {
+    vm.checkForHit = function (mouseOverElement, whichClass) {
 
       //
       // Find the parent element, if any, that is a connector.
       //
-      var hoverElement = chart.searchUp(angular.element(mouseOverElement), whichClass);
+      var hoverElement = vm.searchUp(angular.element(mouseOverElement), whichClass);
       if (!hoverElement) {
         return null;
       }
@@ -119,7 +120,7 @@
     //
     // Translate the coordinates so they are relative to the svg element.
     //
-    chart.translateCoordinates = function (x, y, evt) {
+    vm.translateCoordinates = function (x, y, evt) {
       console.log($element)
       var svg_elem = $element.get(0);
       var matrix = svg_elem.getScreenCTM();
@@ -132,9 +133,9 @@
     //
     // Called on mouse down in the chart.
     //
-    chart.mouseDown = function (evt) {
+    vm.mouseDown = function (evt) {
 
-      chart.chart.deselectAll();
+      vm.model.deselectAll();
 
       dragging.startDrag(evt, {
 
@@ -142,10 +143,10 @@
         // Commence dragging... setup variables to display the drag selection rect.
         //
         dragStarted: function (x, y) {
-          chart.dragSelecting = true;
-          var startPoint = chart.translateCoordinates(x, y, evt);
-          chart.dragSelectionStartPoint = startPoint;
-          chart.dragSelectionRect = {
+          vm.dragSelecting = true;
+          var startPoint = vm.translateCoordinates(x, y, evt);
+          vm.dragSelectionStartPoint = startPoint;
+          vm.dragSelectionRect = {
             x: startPoint.x,
             y: startPoint.y,
             width: 0,
@@ -157,10 +158,10 @@
         // Update the drag selection rect while dragging continues.
         //
         dragging: function (x, y) {
-          var startPoint = chart.dragSelectionStartPoint;
-          var curPoint = chart.translateCoordinates(x, y, evt);
+          var startPoint = vm.dragSelectionStartPoint;
+          var curPoint = vm.translateCoordinates(x, y, evt);
 
-          chart.dragSelectionRect = {
+          vm.dragSelectionRect = {
             x: curPoint.x > startPoint.x ? startPoint.x : curPoint.x,
             y: curPoint.y > startPoint.y ? startPoint.y : curPoint.y,
             width: curPoint.x > startPoint.x ? curPoint.x - startPoint.x : startPoint.x - curPoint.x,
@@ -172,10 +173,10 @@
         // Dragging has ended... select all that are within the drag selection rect.
         //
         dragEnded: function () {
-          chart.dragSelecting = false;
-          chart.chart.applySelectionRect(chart.dragSelectionRect);
-          delete chart.dragSelectionStartPoint;
-          delete chart.dragSelectionRect;
+          vm.dragSelecting = false;
+          vm.model.applySelectionRect(vm.dragSelectionRect);
+          delete vm.dragSelectionStartPoint;
+          delete vm.dragSelectionRect;
         },
       });
     };
@@ -183,51 +184,51 @@
     //
     // Called for each mouse move on the svg element.
     //
-    chart.mouseMove = function (evt) {
+    vm.mouseMove = function (evt) {
 
       //
       // Clear out all cached mouse over elements.
       //
-      chart.mouseOverConnection = null;
-      chart.mouseOverConnector = null;
-      chart.mouseOverNode = null;
+      vm.mouseOverConnection = null;
+      vm.mouseOverConnector = null;
+      vm.mouseOverNode = null;
 
-      var mouseOverElement = chart.hitTest(evt.clientX, evt.clientY);
+      var mouseOverElement = vm.hitTest(evt.clientX, evt.clientY);
       if (mouseOverElement == null) {
         // Mouse isn't over anything, just clear all.
         return;
       }
 
-      if (!chart.draggingConnection) { // Only allow 'connection mouse over' when not dragging out a connection.
+      if (!vm.draggingConnection) { // Only allow 'connection mouse over' when not dragging out a connection.
 
         // Figure out if the mouse is over a connection.
-        var scope = chart.checkForHit(mouseOverElement, chart.connectionClass);
-        chart.mouseOverConnection = (scope && scope.connection) ? scope.connection : null;
-        if (chart.mouseOverConnection) {
+        var scope = vm.checkForHit(mouseOverElement, vm.connectionClass);
+        vm.mouseOverConnection = (scope && scope.connection) ? scope.connection : null;
+        if (vm.mouseOverConnection) {
           // Don't attempt to mouse over anything else.
           return;
         }
       }
 
       // Figure out if the mouse is over a connector.
-      var scope = chart.checkForHit(mouseOverElement, chart.connectorClass);
-      chart.mouseOverConnector = (scope && scope.connector) ? scope.connector : null;
-      if (chart.mouseOverConnector) {
+      var scope = vm.checkForHit(mouseOverElement, vm.connectorClass);
+      vm.mouseOverConnector = (scope && scope.connector) ? scope.connector : null;
+      if (vm.mouseOverConnector) {
         // Don't attempt to mouse over anything else.
         return;
       }
 
       // Figure out if the mouse is over a node.
-      var scope = chart.checkForHit(mouseOverElement, chart.nodeClass);
-      chart.mouseOverNode = (scope && scope.node) ? scope.node : null;
+      var scope = vm.checkForHit(mouseOverElement, vm.nodeClass);
+      vm.mouseOverNode = (scope && scope.node) ? scope.node : null;
     };
 
     //
     // Handle mousedown on a node.
     //
-    chart.nodeMouseDown = function (evt, node) {
+    vm.nodeMouseDown = function (evt, node) {
 
-      var chart = chart.chart;
+      var chart = vm.model;
       var lastMouseCoords;
 
       dragging.startDrag(evt, {
@@ -276,8 +277,8 @@
     //
     // Handle mousedown on a connection.
     //
-    chart.connectionMouseDown = function (evt, connection) {
-      var chart = chart.chart;
+    vm.connectionMouseDown = function (evt, connection) {
+      var chart = vm.model;
       chart.handleConnectionMouseDown(connection, evt.ctrlKey);
 
       // Don't let the chart handle the mouse down.
@@ -288,7 +289,7 @@
     //
     // Handle mousedown on an input connector.
     //
-    chart.connectorMouseDown = function (evt, node, connector, connectorIndex, isInputConnector) {
+    vm.connectorMouseDown = function (evt, node, connector, connectorIndex, isInputConnector) {
 
       //
       // Initiate dragging out of a connection.
@@ -301,30 +302,30 @@
         //
         dragStarted: function (x, y) {
 
-          var curCoords = chart.translateCoordinates(x, y, evt);
+          var curCoords = vm.translateCoordinates(x, y, evt);
 
-          chart.draggingConnection = true;
-          chart.dragPoint1 = chart.computeConnectorPos(node, connectorIndex, isInputConnector);
-          chart.dragPoint2 = {
+          vm.draggingConnection = true;
+          vm.dragPoint1 = vm.computeConnectorPos(node, connectorIndex, isInputConnector);
+          vm.dragPoint2 = {
             x: curCoords.x,
             y: curCoords.y
           };
-          chart.dragTangent1 = chart.computeConnectionSourceTangent(chart.dragPoint1, chart.dragPoint2);
-          chart.dragTangent2 = chart.computeConnectionDestTangent(chart.dragPoint1, chart.dragPoint2);
+          vm.dragTangent1 = vm.computeConnectionSourceTangent(vm.dragPoint1, vm.dragPoint2);
+          vm.dragTangent2 = vm.computeConnectionDestTangent(vm.dragPoint1, vm.dragPoint2);
         },
 
         //
         // Called on mousemove while dragging out a connection.
         //
         dragging: function (x, y, evt) {
-          var startCoords = chart.translateCoordinates(x, y, evt);
-          chart.dragPoint1 = chart.computeConnectorPos(node, connectorIndex, isInputConnector);
-          chart.dragPoint2 = {
+          var startCoords = vm.translateCoordinates(x, y, evt);
+          vm.dragPoint1 = vm.computeConnectorPos(node, connectorIndex, isInputConnector);
+          vm.dragPoint2 = {
             x: startCoords.x,
             y: startCoords.y
           };
-          chart.dragTangent1 = chart.computeConnectionSourceTangent(chart.dragPoint1, chart.dragPoint2);
-          chart.dragTangent2 = chart.computeConnectionDestTangent(chart.dragPoint1, chart.dragPoint2);
+          vm.dragTangent1 = vm.computeConnectionSourceTangent(vm.dragPoint1, vm.dragPoint2);
+          vm.dragTangent2 = vm.computeConnectionDestTangent(vm.dragPoint1, vm.dragPoint2);
         },
 
         //
@@ -332,28 +333,26 @@
         //
         dragEnded: function () {
 
-          if (chart.mouseOverConnector &&
-            chart.mouseOverConnector !== connector) {
+          if (vm.mouseOverConnector &&
+            vm.mouseOverConnector !== connector) {
 
             //
             // Dragging has ended...
             // The mouse is over a valid connector...
             // Create a new connection.
             //
-            chart.chart.createNewConnection(connector, chart.mouseOverConnector);
+            vm.model.createNewConnection(connector, vm.mouseOverConnector);
           }
 
-          chart.draggingConnection = false;
-          delete chart.dragPoint1;
-          delete chart.dragTangent1;
-          delete chart.dragPoint2;
-          delete chart.dragTangent2;
+          vm.draggingConnection = false;
+          delete vm.dragPoint1;
+          delete vm.dragTangent1;
+          delete vm.dragPoint2;
+          delete vm.dragTangent2;
         }
 
       });
     };
-
-
 
 
     var chart = this;
@@ -747,7 +746,7 @@
     //
     // View model for the chart.
     //
-    chart.ChartmodelService = function (chartDataModel) {
+    chart.modelmodelService = function (chartDataModel) {
 
       //
       // Find a specific node within the chart.
@@ -1126,8 +1125,7 @@
       };
 
     }
-    
-    
+
 
   }
 })();
