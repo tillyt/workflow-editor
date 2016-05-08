@@ -3,17 +3,17 @@
 
   angular
     .module('workflowEditor')
-    .directive('acmeNavbar', acmeNavbar);
+    .directive('toolbar', toolbar);
 
   /** @ngInject */
-  function acmeNavbar() {
+  function toolbar() {
     var directive = {
       restrict: 'E',
-      templateUrl: 'app/components/navbar/navbar.html',
+      templateUrl: 'app/components/toolbar/toolbar.html',
       scope: {
           creationDate: '='
       },
-      controller: NavbarController,
+      controller: ToolbarController,
       controllerAs: 'vm',
       bindToController: true
     };
@@ -21,11 +21,14 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController(moment) {
+    function ToolbarController(moment) {
       var vm = this;
 
       // "vm.creationDate" is available by directive option "bindToController: true"
       vm.relativeDate = moment(vm.creationDate).fromNow();
+
+
+
     }
   }
 

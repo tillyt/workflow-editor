@@ -1,0 +1,91 @@
+<nav class="navbar navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="nav navbar-nav">
+
+
+      <!-- Single button using append-to-body -->
+      <div class="btn-group" uib-dropdown dropdown-append-to-body>
+        <button id="btn-append-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>
+          Dropdown on Body <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
+          <li role="menuitem"><a href="#">Action</a></li>
+          <li role="menuitem"><a href="#">Another action</a></li>
+          <li role="menuitem"><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li role="menuitem"><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+
+
+      <!-- Single button with keyboard nav -->
+      <div class="btn-group" uib-dropdown keyboard-nav>
+        <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+          Dropdown with keyboard navigation <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+          <li role="menuitem"><a href="#">Action</a></li>
+          <li role="menuitem"><a href="#">Another action</a></li>
+          <li role="menuitem"><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li role="menuitem"><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+
+
+    </div>
+
+
+    <ul class="nav navbar-nav">
+
+      <!--<li><a class="btn btn-success" ng-click="main.addNewNode()">Add New Node</a></li>-->
+      <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+      <li><a href="#">Link</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+           aria-expanded="false">Dropdown <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">One more separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <!--<pre>Model: {{customPopupSelected | json}}</pre>-->
+        <input type="text" ng-model="customPopupSelected" placeholder="Available Nodes"
+               uib-typeahead="state as state.name for state in statesWithFlags | filter:{name:$viewValue}"
+               typeahead-popup-template-url="customPopupTemplate.html" class="form-control">
+        <!--<input type="text" class="form-control" placeholder="Search">-->
+      </div>
+      <button type="submit" class="btn btn-default">Add Node</button>
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">Link</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+           aria-expanded="false">Dropdown <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+    </ul>
+  </div>
+</nav>
+
+
+
+
+
