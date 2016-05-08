@@ -21,7 +21,7 @@
 
 
     /** @ngInject */
-    function ToolbarController(Blob, FileSaver) {
+    function ToolbarController(Blob, FileSaver, toastr) {
       var vm = this;
       vm.selected = null;
       vm.interfaces = vm.packages.interfaces;

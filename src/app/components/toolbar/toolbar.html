@@ -8,82 +8,26 @@
     </div>
     <div class="container-fluid">
       <div class="nav navbar-nav">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav navbar-left pull-left">
           <li uib-dropdown>
             <a href="#" uib-dropdown-toggle>
+              <i class="fa fa-code-fork" aria-hidden="true"></i>
               Nipype Interfaces
               <b class='caret'></b>
             </a>
             <tree tree='vm.tree'></tree>
           </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#" >Load</a></li>
-          <li><a href="#" >Download</a></li>
+        <ul class="nav navbar-nav navbar-right pull-right">
+          <li><a href="#" >
+            <i class="fa fa-upload" aria-hidden="true"></i>
+            Load
+          </a></li>
+          <li><a ng-click="vm.downloadJSON()">
+            <i class="fa fa-download" aria-hidden="true"></i>
+            Download
+          </a></li>
         </ul>
-
-
-        <!---->
-        <!--<div class="btn-group" uib-dropdown uib-keyboard-nav>-->
-        <!--<button id="nipype-interfaces" type="button" class="btn btn-primary" uib-dropdown-toggle>-->
-        <!--Interfaces-->
-        <!--<span class="caret"></span>-->
-        <!--</button>-->
-        <!--<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="interfaces">-->
-        <!--<li ng-repeat="module in vm.categories" role="menuitem">-->
-        <!--<a ng-click="vm.module=module">{{module | uppercase}}</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--<div class="btn-group" ng-if="vm.module">-->
-        <!--<button ng-repeat="interface in Object.keys(vm.interfaces) | filter:interface.category" type="button"-->
-        <!--class="btn btn-default">-->
-        <!--{{interface}}-->
-        <!--</button>-->
-
-
-        <!--| filter:vm.module-->
-        <!--<button ng-repeat="interface in vm.modules[vm.module].interfaces" type="button" class="btn btn-default">-->
-        <!--{{interface}}-->
-        <!--</button>-->
-        <!--<div ng-repeat="submodule in vm.modules[vm.module].submodules">-->
-        <!--<button ng-repeat="interface in vm.modules[submodule].interfaces" type="button" class="btn btn-default">-->
-        <!--{{interface}}-->
-        <!--</button>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="btn-group" ng-if="vm.module">-->
-        <!--<button ng-repeat="interface in vm.modules[vm.module].interfaces" type="button" class="btn btn-default">-->
-        <!--{{interface}}-->
-        <!--</button>-->
-        <!--</div>-->
-        <!--<div class="btn-group" ng-if="vm.module" ng-repeat="submodule in vm.modules[vm.module].submodules">-->
-        <!--<button ng-repeat="interface in vm.modules[submodule].interfaces" type="button" class="btn btn-default">-->
-        <!--{{interface}}-->
-        <!--</button>-->
-        <!--</div>-->
-
-        <!--<div class="btn-group" uib-dropdown ng-if="vm.selected">-->
-        <!--<button id="split-button" type="button" class="btn btn-default">-->
-        <!--{{vm.selected}}-->
-        <!--</button>-->
-        <!--<button type="button" class="btn btn-default" uib-dropdown-toggle>-->
-        <!--<span class="caret"></span>-->
-        <!--</button>-->
-        <!--<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">-->
-        <!--<li ng-repeat="interface in vm.modules[module].interfaces" role="menuitem">-->
-        <!--<a ng-click="">-->
-        <!--{{vm.interfaces[interface]["name"]}}-->
-        <!--</a>-->
-        <!--</li>-->
-        <!--<li class="divider"></li>-->
-        <!--<li ng-repeat="category in vm.categories" role="menuitem">-->
-        <!--<a href="#">-->
-        <!--Separated link-->
-        <!--</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
 
       </div>
     </div>
