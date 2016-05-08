@@ -6,7 +6,6 @@
       'ngAnimate',
       'ui.router',
       'ui.bootstrap',
-      'ui.navbar',
       'toastr',
       'ngFileSaver',
       'LocalStorageModule'
