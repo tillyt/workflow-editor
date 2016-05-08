@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($timeout, nipypePackages, toastr, model) {
+  function MainController($timeout, nipypePackages, toastr, viewModel) {
     var vm = this;
 
     vm.classAnimation = '';
@@ -279,7 +279,7 @@
     //
     // Create the view-model for the chart and attach to the scope.
     //
-    vm.chartViewModel = new model.ChartViewModel(chartDataModel);
+    vm.chartViewModel = new viewModel.ChartViewModel(chartDataModel);
 
 
     console.log(vm.chartViewModel);
