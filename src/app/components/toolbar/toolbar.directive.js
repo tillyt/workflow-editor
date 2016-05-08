@@ -11,7 +11,7 @@
       restrict: 'E',
       templateUrl: 'app/components/toolbar/toolbar.html',
       scope: {
-          creationDate: '='
+        packages: '='
       },
       controller: ToolbarController,
       controllerAs: 'vm',
@@ -21,13 +21,18 @@
     return directive;
 
     /** @ngInject */
-    function ToolbarController(moment) {
+    function ToolbarController() {
       var vm = this;
+      vm.selected = null;
+      vm.interfaces = vm.packages.interfaces;
+      vm.modules = vm.packages.modules;
+      vm.categories = vm.modules[""].submodules;
 
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
-
-
+      angular.forEach(vm.interfaces, function(val, key){
+        val.category = key.split('.')[0];
+      });
+      
+      
 
     }
   }

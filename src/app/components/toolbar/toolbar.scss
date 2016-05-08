@@ -8,14 +8,15 @@ h1 {
   line-height: 1.25em;
 }
 
-a:hover, a:focus {
-  color: black;
-}
 
-.navbar {
+
+.nav {
   .btn-group {
     padding-top: 10px;
     padding-bottom: 10px;
+  }
+  a:hover, a:focus {
+    color: green;
   }
 }
 

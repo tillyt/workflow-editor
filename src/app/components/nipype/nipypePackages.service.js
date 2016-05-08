@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('workflow-editor')
+  angular.module('workflowEditor')
     .service('nipypePackages', [
       nipypePackages
     ]);
@@ -15088,22 +15088,9 @@
       }
     };
 
-    var interfaces = packages.interfaces;
-
-    var modules = packages.modules;
-
-    this.getAllNipypePackages = function () {
+    this.getNipypePackages = function () {
       return packages;
     };
-
-    this.getAllNipypeInterfaces = function () {
-      return interfaces;
-    };
-
-    this.getAllNipypeModules = function () {
-      return modules;
-    };
-
 
 }
 })
