@@ -282,7 +282,7 @@
     vm.chartViewModel = new model.ChartViewModel(chartDataModel);
 
 
-
+    console.log(vm.chartViewModel);
 
 
 

@@ -9,7 +9,7 @@
   function flowchart() {
     return {
       restrict: 'E',
-      templateUrl: "flowchart/flowchart.tmpl.html",
+      templateUrl: "app/components/flowchart/flowchart.tmpl.html",
       replace: true,
       scope: {
         chart: "=chart"
