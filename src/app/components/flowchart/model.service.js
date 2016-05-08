@@ -2,11 +2,11 @@
   'use strict';
 
   angular.module('app')
-    .service('viewModel', [
-      viewModel
+    .service('modelService', [
+      modelService
     ]);
 
-  function viewModel(){
+  function modelService(){
 
     // nodes currently on canvas, {id: node}
     // format of each node: {id: id_number, interface: interface, x: x, y: y}

@@ -392,7 +392,7 @@
     //
     // View model for a connector.
     //
-    chart.ConnectorViewModel = function (connectorDataModel, x, y, parentNode) {
+    chart.ConnectormodelService = function (connectorDataModel, x, y, parentNode) {
 
       chart.data = connectorDataModel;
       chart._parentNode = parentNode;
@@ -431,24 +431,24 @@
     //
     // Create view model for a list of data models.
     //
-    var createConnectorsViewModel = function (connectorDataModels, x, parentNode) {
-      var viewModels = [];
+    var createConnectorsmodelService = function (connectorDataModels, x, parentNode) {
+      var modelServices = [];
 
       if (connectorDataModels) {
         for (var i = 0; i < connectorDataModels.length; ++i) {
-          var connectorViewModel =
-            new chart.ConnectorViewModel(connectorDataModels[i], x, chart.computeConnectorY(i), parentNode);
-          viewModels.push(connectorViewModel);
+          var connectormodelService =
+            new chart.ConnectormodelService(connectorDataModels[i], x, chart.computeConnectorY(i), parentNode);
+          modelServices.push(connectormodelService);
         }
       }
 
-      return viewModels;
+      return modelServices;
     };
 
     //
     // View model for a node.
     //
-    chart.NodeViewModel = function (nodeDataModel) {
+    chart.NodemodelService = function (nodeDataModel) {
 
       chart.data = nodeDataModel;
 
@@ -456,8 +456,8 @@
       if (!chart.data.width || chart.data.width < 0) {
         chart.data.width = chart.defaultNodeWidth;
       }
-      chart.inputConnectors = createConnectorsViewModel(chart.data.inputConnectors, 0, chart);
-      chart.outputConnectors = createConnectorsViewModel(chart.data.outputConnectors, chart.data.width, chart);
+      chart.inputConnectors = createConnectorsmodelService(chart.data.inputConnectors, 0, chart);
+      chart.outputConnectors = createConnectorsmodelService(chart.data.outputConnectors, chart.data.width, chart);
 
       // Set to true when the node is selected.
       chart._selected = false;
@@ -531,15 +531,15 @@
 
       //
       // Internal function to add a connector.
-      chart._addConnector = function (connectorDataModel, x, connectorsDataModel, connectorsViewModel) {
-        var connectorViewModel =
-          new chart.ConnectorViewModel(connectorDataModel, x,
-            chart.computeConnectorY(connectorsViewModel.length), chart);
+      chart._addConnector = function (connectorDataModel, x, connectorsDataModel, connectorsmodelService) {
+        var connectormodelService =
+          new chart.ConnectormodelService(connectorDataModel, x,
+            chart.computeConnectorY(connectorsmodelService.length), chart);
 
         connectorsDataModel.push(connectorDataModel);
 
         // Add to node's view model.
-        connectorsViewModel.push(connectorViewModel);
+        connectorsmodelService.push(connectormodelService);
       };
 
       //
@@ -568,22 +568,22 @@
     //
     // Wrap the nodes data-model in a view-model.
     //
-    var createNodesViewModel = function (nodesDataModel) {
-      var nodesViewModel = [];
+    var createNodesmodelService = function (nodesDataModel) {
+      var nodesmodelService = [];
 
       if (nodesDataModel) {
         for (var i = 0; i < nodesDataModel.length; ++i) {
-          nodesViewModel.push(new chart.NodeViewModel(nodesDataModel[i]));
+          nodesmodelService.push(new chart.NodemodelService(nodesDataModel[i]));
         }
       }
 
-      return nodesViewModel;
+      return nodesmodelService;
     };
 
     //
     // View model for a connection.
     //
-    chart.ConnectionViewModel = function (connectionDataModel, sourceConnector, destConnector) {
+    chart.ConnectionmodelService = function (connectionDataModel, sourceConnector, destConnector) {
 
       chart.data = connectionDataModel;
       chart.source = sourceConnector;
@@ -747,7 +747,7 @@
     //
     // View model for the chart.
     //
-    chart.ChartViewModel = function (chartDataModel) {
+    chart.ChartmodelService = function (chartDataModel) {
 
       //
       // Find a specific node within the chart.
@@ -795,37 +795,37 @@
       //
       // Create a view model for connection from the data model.
       //
-      chart._createConnectionViewModel = function (connectionDataModel) {
+      chart._createConnectionmodelService = function (connectionDataModel) {
 
         var sourceConnector = chart.findOutputConnector(connectionDataModel.source.nodeID, connectionDataModel.source.connectorIndex);
         var destConnector = chart.findInputConnector(connectionDataModel.dest.nodeID, connectionDataModel.dest.connectorIndex);
-        return new chart.ConnectionViewModel(connectionDataModel, sourceConnector, destConnector);
+        return new chart.ConnectionmodelService(connectionDataModel, sourceConnector, destConnector);
       };
 
       //
       // Wrap the connections data-model in a view-model.
       //
-      chart._createConnectionsViewModel = function (connectionsDataModel) {
+      chart._createConnectionsmodelService = function (connectionsDataModel) {
 
-        var connectionsViewModel = [];
+        var connectionsmodelService = [];
 
         if (connectionsDataModel) {
           for (var i = 0; i < connectionsDataModel.length; ++i) {
-            connectionsViewModel.push(chart._createConnectionViewModel(connectionsDataModel[i]));
+            connectionsmodelService.push(chart._createConnectionmodelService(connectionsDataModel[i]));
           }
         }
 
-        return connectionsViewModel;
+        return connectionsmodelService;
       };
 
       // Reference to the underlying data.
       chart.data = chartDataModel;
 
       // Create a view-model for nodes.
-      chart.nodes = createNodesViewModel(chart.data.nodes);
+      chart.nodes = createNodesmodelService(chart.data.nodes);
 
       // Create a view-model for connections.
-      chart.connections = chart._createConnectionsViewModel(chart.data.connections);
+      chart.connections = chart._createConnectionsmodelService(chart.data.connections);
 
       //
       // Create a view model for a new connection.
@@ -837,9 +837,9 @@
           connectionsDataModel = chart.data.connections = [];
         }
 
-        var connectionsViewModel = chart.connections;
-        if (!connectionsViewModel) {
-          connectionsViewModel = chart.connections = [];
+        var connectionsmodelService = chart.connections;
+        if (!connectionsmodelService) {
+          connectionsmodelService = chart.connections = [];
         }
 
         var startNode = startConnector.parentNode();
@@ -891,8 +891,8 @@
         var outputConnector = startConnectorType == 'output' ? startConnector : endConnector;
         var inputConnector = startConnectorType == 'output' ? endConnector : startConnector;
 
-        var connectionViewModel = new chart.ConnectionViewModel(connectionDataModel, outputConnector, inputConnector);
-        connectionsViewModel.push(connectionViewModel);
+        var connectionmodelService = new chart.ConnectionmodelService(connectionDataModel, outputConnector, inputConnector);
+        connectionsmodelService.push(connectionmodelService);
       };
 
       //
@@ -911,7 +911,7 @@
         //
         // Update the view model.
         //
-        chart.nodes.push(new chart.NodeViewModel(nodeDataModel));
+        chart.nodes.push(new chart.NodemodelService(nodeDataModel));
       };
 
       //
@@ -1007,7 +1007,7 @@
       //
       chart.deleteSelected = function () {
 
-        var newNodeViewModels = [];
+        var newNodemodelServices = [];
         var newNodeDataModels = [];
 
         var deletedNodeIds = [];
@@ -1023,7 +1023,7 @@
           var node = chart.nodes[nodeIndex];
           if (!node.selected()) {
             // Only retain non-selected nodes.
-            newNodeViewModels.push(node);
+            newNodemodelServices.push(node);
             newNodeDataModels.push(node.data);
           }
           else {
@@ -1033,7 +1033,7 @@
           }
         }
 
-        var newConnectionViewModels = [];
+        var newConnectionmodelServices = [];
         var newConnectionDataModels = [];
 
         //
@@ -1050,7 +1050,7 @@
             // The nodes model connection is attached to, where not deleted,
             // so keep the connection.
             //
-            newConnectionViewModels.push(connection);
+            newConnectionmodelServices.push(connection);
             newConnectionDataModels.push(connection.data);
           }
         }
@@ -1058,9 +1058,9 @@
         //
         // Update nodes and connections.
         //
-        chart.nodes = newNodeViewModels;
+        chart.nodes = newNodemodelServices;
         chart.data.nodes = newNodeDataModels;
-        chart.connections = newConnectionViewModels;
+        chart.connections = newConnectionmodelServices;
         chart.data.connections = newConnectionDataModels;
       };
 
