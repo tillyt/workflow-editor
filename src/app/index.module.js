@@ -2,6 +2,12 @@
   'use strict';
 
   angular
-    .module('workflowEditor', ['ngAnimate', 'ui.router', 'ui.bootstrap', 'toastr']);
+    .module('workflowEditor', [
+      'ngAnimate',
+      'ui.router',
+      'ui.bootstrap',
+      'toastr',
+      'ngFileSaver'
+    ]);
 
 })();

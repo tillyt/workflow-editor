@@ -7,21 +7,21 @@
 
   /** @ngInject */
   function toolbar() {
-    var directive = {
+    return {
       restrict: 'E',
       templateUrl: 'app/components/toolbar/toolbar.html',
       scope: {
-        packages: '='
+        packages: '=',
+        model: '='
       },
       controller: ToolbarController,
       controllerAs: 'vm',
       bindToController: true
     };
 
-    return directive;
 
     /** @ngInject */
-    function ToolbarController() {
+    function ToolbarController(Blob, FileSaver) {
       var vm = this;
       vm.selected = null;
       vm.interfaces = vm.packages.interfaces;
@@ -31,6 +31,19 @@
       angular.forEach(vm.interfaces, function (val, key) {
         val.category = key.split('.')[0];
       });
+
+      function showToastr(message) {
+        toastr.info(message);
+      }
+
+      vm.downloadJSON = function () {
+        var obj = vm.model;
+        var data = angular.toJson(obj);
+        var blob = new Blob([data], {type: "text/plain;charset=utf-8"});
+        showToastr('Downloaded workflow.json');
+        FileSaver.saveAs(blob, "workflow.json");
+      };
+
 
       vm.tree = [{
         name: 'IO',

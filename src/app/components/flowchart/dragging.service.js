@@ -1,9 +1,11 @@
-angular.module('dragging', ['mouseCapture'] )
+(function () {
+  'use strict'
 
-  //
-  // Service used to help with dragging and clicking on elements.
-  //
-  .factory('dragging', ['$rootScope', 'mouseCapture',function ($rootScope, mouseCapture) {
+  angular
+    .module('workflowEditor')
+    .factory('dragging', dragging);
+
+  function dragging($rootScope, mouseCapture) {
 
     //
     // Threshold for dragging.
@@ -14,25 +16,20 @@ angular.module('dragging', ['mouseCapture'] )
     return {
 
 
-      //
       // Called by users of the service to register a mousedown event and start dragging.
       // Acquires the 'mouse capture' until the mouseup event.
-      //
       startDrag: function (evt, config) {
 
         var dragging = false;
         var x = evt.pageX;
         var y = evt.pageY;
 
-        //
         // Handler for mousemove events while the mouse is 'captured'.
-        //
         var mouseMove = function (evt) {
 
           if (!dragging) {
             if (Math.abs(evt.pageX - x) > threshold ||
-              Math.abs(evt.pageY - y) > threshold)
-            {
+              Math.abs(evt.pageY - y) > threshold) {
               dragging = true;
 
               if (config.dragStarted) {
@@ -56,10 +53,8 @@ angular.module('dragging', ['mouseCapture'] )
           }
         };
 
-        //
         // Handler for when mouse capture is released.
-        //
-        var released = function() {
+        var released = function () {
 
           if (dragging) {
             if (config.dragEnded) {
@@ -73,10 +68,8 @@ angular.module('dragging', ['mouseCapture'] )
           }
         };
 
-        //
         // Handler for mouseup event while the mouse is 'captured'.
         // Mouseup releases the mouse capture.
-        //
         var mouseUp = function (evt) {
 
           mouseCapture.release();
@@ -85,21 +78,19 @@ angular.module('dragging', ['mouseCapture'] )
           evt.preventDefault();
         };
 
-        //
         // Acquire the mouse capture and start handling mouse events.
-        //
         mouseCapture.acquire(evt, {
           mouseMove: mouseMove,
           mouseUp: mouseUp,
-          released: released,
+          released: released
         });
 
         evt.stopPropagation();
         evt.preventDefault();
-      },
+      }
 
     };
 
-  }])
+  }
 
-;
+})();
