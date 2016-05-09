@@ -5,7 +5,7 @@
     .module('workflowEditor')
     .factory('dragging', dragging);
 
-  function dragging($rootScope, mouseCapture) {
+  function dragging(mouseCapture) {
 
     //
     // Threshold for dragging.

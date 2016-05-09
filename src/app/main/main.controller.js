@@ -42,7 +42,7 @@
     }
 
 
-    
+
 
 
     // keyboard shortcuts
@@ -81,7 +81,7 @@
 
 
     vm.addNewNode = function (nipype_interface) {
-
+      alert('oh hey it worked');
       modelService.addNode(nipype_interface);
     };
 

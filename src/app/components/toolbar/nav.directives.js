@@ -19,15 +19,17 @@
         scope: {
           leaf: "="
         },
+        controller: 'MainController',
+        controllerAs: 'ctrl',
         templateUrl: 'app/components/toolbar/template-li.html',
-        link: function(scope, element, attrs) {
+        link: function(scope, element, attrs, ctrl) {
           if (angular.isArray(scope.leaf.subtree)) {
             element.append("<tree tree='leaf.subtree'></tree>");
             element.addClass('dropdown-submenu');
             $compile(element.contents())(scope);
           } else {
             element.bind('click', function() {
-              alert("You have clicked on " + scope.leaf.name);
+              ctrl.addNewNode(scope.leaf.name);
             });
 
           }

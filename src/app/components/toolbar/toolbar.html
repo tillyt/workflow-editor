@@ -8,7 +8,7 @@
     </div>
     <div class="container-fluid">
       <div class="nav navbar-nav">
-        <ul class="nav navbar-nav navbar-left pull-left">
+        <ul class="nav navbar-nav">
           <li uib-dropdown>
             <a href="#" uib-dropdown-toggle>
               <i class="fa fa-code-fork" aria-hidden="true"></i>
@@ -17,8 +17,19 @@
             </a>
             <tree tree='vm.tree'></tree>
           </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right pull-right">
+
+          <li>
+            <form class="navbar-form" role="search">
+              <div class="form-group">
+                <input type="text" placeholder="Search for an Interface" ng-model="selected" uib-typeahead-wait-ms="100" uib-typeahead-min-length="3"
+                       uib-typeahead="interface for interface in vm.interface_names | filter:$viewValue | limitTo:10"
+                       class="form-control" uib-typeahead-no-results="noMatch">
+
+              </div>
+              <button type="submit" ng-show="selected && (!noMatch)" ng-click="vm.onSelectNode(selected)" class="btn btn-success">Add</button>
+            </form>
+          </li>
+
           <li><a href="#" >
             <i class="fa fa-upload" aria-hidden="true"></i>
             Load
