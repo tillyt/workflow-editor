@@ -152,16 +152,14 @@
   </g>
 
 
-
-  <rect
+  <g
     ng-if="vm.currentlyDrawingSelectionRect"
-    class="drag-selection-rect"
-    ng-attr-x="{{vm.selectionRect.x}}"
-    ng-attr-y="{{vm.selectionRect.y}}"
-    ng-attr-width="{{vm.selectionRect.width}}"
-    ng-attr-height="{{vm.selectionRect.height}}"
   >
-  </rect>
+    <path
+      ng-attr-d="M {{vm.dragSelectionRect.x1}},{{vm.dragSelectionRect.y1}} {{vm.dragSelectionRect.x2}},{{vm.dragSelectionRect.y1}} {{vm.dragSelectionRect.x2}},{{vm.dragSelectionRect.y2}} {{vm.dragSelectionRect.x1}},{{vm.dragSelectionRect.y2}}"
+      class="dragging-edge" />
+  </g>
+
 
 
 

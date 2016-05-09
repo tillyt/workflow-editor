@@ -69,6 +69,7 @@
     // MOUSE HANDLERS FOR EDITOR
 
     vm.editorMouseDown = function (evt) {
+      evt.preventDefault();
       // on mouse down in editor, deselect all items and start drawing
       vm.deselectAll();
       // start point relative to viewport
@@ -79,29 +80,33 @@
       // start drawing rect
       vm.currentlyDrawingSelectionRect = true;
       vm.selectionRect = {
-        x: startPoint.x,
-        y: startPoint.y,
-        width: 0,
-        height: 0
+        x1: startPoint.x,
+        y1: startPoint.y,
+        x2: startPoint.x,
+        y2: startPoint.y
       };
     };
 
     vm.editorMouseMove = function (evt) {
+      evt.preventDefault();
       if (vm.currentlyDrawingSelectionRect) {
         // if drawing a selection rectangle, keep updating dimensions as mouse moves
         // get current point relative to SVG
         var currentPoint = vm.translateCoordinates(evt.clientX, evt.clientY, evt);
-        vm.selectionRect.width = currentPoint.x - vm.selectionRect.x;
-        vm.selectionRect.height = currentPoint.y - vm.selectionRect.y;
+        vm.selectionRect.x2 = currentPoint.x;
+        vm.selectionRect.y2 = currentPoint.y;
         // update selected items as you drag
-        vm.applySelectionRect(vm.selectionRect.x, vm.selectionRect.y, currentPoint.x, currentPoint.y);
+        vm.applySelectionRect(vm.selectionRect.x1, vm.selectionRect.y1, vm.selectionRect.x2, vm.selectionRect.y2);
       }
     };
 
     vm.editorMouseUp = function (evt) {
+      evt.preventDefault();
       vm.currentlyDrawingSelectionRect = false;
       var endPoint = vm.translateCoordinates(evt.clientX, evt.clientY, evt);
-      vm.applySelectionRect(vm.selectionRect.x, vm.selectionRect.y, endPoint.x, endPoint.y);
+      vm.selectionRect.x2 = endPoint.x;
+      vm.selectionRect.y2 = endPoint.y;
+      vm.applySelectionRect(vm.selectionRect.x1, vm.selectionRect.y1, vm.selectionRect.x2, vm.selectionRect.y2);
     };
 
     vm.applySelectionRect = function (x1, y1, x2, y2) {
@@ -111,7 +116,7 @@
         var containedWidthwise = (node.x < x1 && node.x > x2) || (node.x < x2 && node.x > x1);
         var containedHeightwise = (node.x < x1 && node.x > x2) || (node.x < x2 && node.x > x1);
         if (rectWideEnough && rectTallEnough && containedWidthwise && containedHeightwise) {
-          vm.selected.push(id);
+          vm.selectedNodes.push(id);
         }
       });
     };
@@ -122,11 +127,11 @@
     };
 
     vm.isNodeSelected = function (id) {
-      return (selectedNodes.indexOf(id) != -1);
+      return (vm.selectedNodes.indexOf(id) != -1);
     };
 
     vm.isEdgeSelected = function (id) {
-      return (selectedEdges.indexOf(id) != -1);
+      return (vm.selectedEdges.indexOf(id) != -1);
     };
 
 

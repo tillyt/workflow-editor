@@ -8,7 +8,8 @@
       'ui.bootstrap',
       'toastr',
       'ngFileSaver',
-      'LocalStorageModule'
+      'LocalStorageModule',
+      'sd'
     ]);
 
 })();

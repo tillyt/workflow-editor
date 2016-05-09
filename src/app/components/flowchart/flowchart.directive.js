@@ -6,7 +6,8 @@
     .directive('flowchart', flowchart);
 
   /** @ngInject */
-  function flowchart() {
+  function flowchart(svgCompile) {
+    // sd.js svgCompile service solves the problems with SVG paths being treated as dummy HTML nodes and not showing up
     return {
       restrict: 'E',
       type: 'svg',
