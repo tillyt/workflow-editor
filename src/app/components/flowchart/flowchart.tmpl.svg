@@ -16,6 +16,9 @@
     ng-attr-x="{{node.x}}"
     ng-attr-y="{{node.y}}"
     ng-attr-id="{{node.id}}"
+    ng-mousedown="vm.nodeMouseDown($event, node)"
+    ng-mousemove="vm.nodeMouseMove($event, node)"
+    ng-mouseup="vm.nodeMouseUp($event, node)"
   >
 
     <rect
@@ -26,7 +29,6 @@
       ng-attr-width="{{vm.width(node)}}"
       ng-attr-height="{{vm.nodeHeight}}"
       fill="#cccccc"
-      ng-mousedown="vm.nodeMouseDown($event, node)"
       ng-class="vm.isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
     >
     </rect>
