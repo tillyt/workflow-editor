@@ -7,19 +7,13 @@
 
   function dragging(mouseCoordinates) {
 
-    //
-    // Threshold for dragging.
-    // When the mouse moves by at least this amount dragging starts.
-    //
+    // dragging starts when mouse moves at least this many pixels
     var threshold = 5;
 
-    return {
+    var api = {
 
-
-      // Called by users of the service to register a mousedown event and start dragging.
-      // Acquires the 'mouse capture' until the mouseup event.
       startDrag: function (evt, config) {
-
+        // called by users of the service after mousedown to start dragging
         var dragging = false;
         var x = evt.pageX;
         var y = evt.pageY;
@@ -90,6 +84,8 @@
       }
 
     };
+
+    return api;
 
   }
 

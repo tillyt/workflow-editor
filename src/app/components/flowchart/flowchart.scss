@@ -22,11 +22,12 @@ $font-size-large: 22px;
     font-weight: 300;
     cursor: crosshair;
     text-rendering: optimizeLegibility;
-    rect {
-      cursor: move;
-      padding: 10px;
-    }
+
   }
+}
+rect {
+  cursor: move;
+  padding: 10px;
 }
 
 .draggable-object {
