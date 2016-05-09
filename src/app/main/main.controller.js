@@ -81,7 +81,7 @@
 
 
     vm.addNewNode = function (nipype_interface) {
-      alert('oh hey it worked');
+      showToastr('Adding ' + nipype_interface + ' to workflow');
       modelService.addNode(nipype_interface);
     };
 

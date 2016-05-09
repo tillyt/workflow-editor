@@ -5,12 +5,18 @@
     .module('workflowEditor')
     .controller('FlowchartController', FlowchartController);
 
-  function FlowchartController(dragging, $element, $document, modelService) {
+  function FlowchartController($element, $document, modelService) {
 
     var vm = this;
 
     vm.nodeHeight = 70;
 
+    // height of SVG container
+    // initially the size of the window
+    // size adjusts with nodes (if you drag a node down, the editor height increases to fit it)
+    vm.editorHeight = Window.innerHeight;
+
+    // node width determined based on width of connectors or name, whichever's bigger
     vm.width = function (node) {
       var num_inputs = Object.keys(node.interface.inputs).length;
       var num_chars_in_name = node.interface.name.length;
@@ -25,161 +31,102 @@
       }
     };
 
-
-    // jQuery's hasClass doesn't work for SVG, but this does!
-    // takes an object obj and checks for class has
-    // returns true if the class exits in obj, false otherwise
-    var hasClassSVG = function (obj, has) {
-      var classes = obj.attr('class');
-      if (!classes) {
-        return false;
-      }
-
-      var index = classes.search(has);
-
-      if (index == -1) {
-        return false;
-      }
-      else {
-        return true;
-      }
-    };
-
-
-    //
-    // Init data-model variables.
-    //
-    vm.draggingConnection = false;
-    vm.connectorSize = 10;
-    vm.dragSelecting = false;
-    /* Can use chart to test the drag selection rect.
-     chart.dragSelectionRect = {
-     x: 0,
-     y: 0,
-     width: 0,
-     height: 0,
-     };
-     */
-
-    //
-    // Reference to the connection, connector or node that the mouse is currently over.
-    //
-    vm.mouseOverConnector = null;
-    vm.mouseOverConnection = null;
-    vm.mouseOverNode = null;
-
-    // The class for connections and connectors.
+    // CSS classes for nodes, connectors, and edges
     vm.connectionClass = 'connection';
     vm.connectorClass = 'connector';
     vm.nodeClass = 'node';
 
-    // Search up the HTML element tree for an element the requested class.
-    vm.searchUp = function (element, parentClass) {
 
-      // Reached the root.
-      if (element == null || element.length == 0) {
-        return null;
-      }
+    // initialize variables
+    vm.currentlyDrawingEdge = false;
+    vm.currentlyDrawingSelectionRect = false;
 
-      // Check if the element has the class that identifies it as a connector.
-      if (hasClassSVG(element, parentClass)) {
-        // Found the connector element.
-        return element;
-      }
+    vm.selectedItems = [];
 
-      // Recursively search parent elements.
-      return vm.searchUp(element.parent(), parentClass);
+    vm.deselectAll = function () {
+      //TODO
+      console.log('TODO deselectAll function');
+      return;
     };
 
-    // Hit test and retrieve node and connector that was hit at the specified coordinates.
-    //
-    vm.hitTest = function (clientX, clientY) {
 
-      //
-      // retrieve the element the mouse is currently over.
-      //
-      return $document.elementFromPoint(clientX, clientY);
-    };
 
-    //
-    // Hit test and retreive node and connector that was hit at the specified coordinates.
-    //
-    vm.checkForHit = function (mouseOverElement, whichClass) {
+    console.log($element[0].getScreenCTM());
 
-      //
-      // Find the parent element, if any, that is a connector.
-      //
-      var hoverElement = vm.searchUp(angular.element(mouseOverElement), whichClass);
-      if (!hoverElement) {
-        return null;
-      }
 
-      return hoverElement.scope();
-    };
-
-    //
-    // Translate the coordinates so they are relative to the svg element.
-    //
+    // translate the coordinates so they are relative to the svg element
     vm.translateCoordinates = function (x, y, evt) {
-      console.log($element)
-      var svg_elem = $element.get(0);
-      var matrix = svg_elem.getScreenCTM();
-      var point = svg_elem.createSVGPoint();
+      var svgElement = $element[0];
+      // getScreenCTM returns the transform matrix used to convert document coordinates to screen coordinates
+      // we want it the other way so we invert it
+      var matrix = svgElement.getScreenCTM().inverse();
+      // create a new SVGPoint object that is initialized to the point (0,0)
+      // in the user coordinate system and that is not attached to any document
+      var point = svgElement.createSVGPoint();
+      // The pageXOffset and pageYOffset properties return the pixels the current document has been scrolled from the upper left corner of the window, horizontally and vertically.
+      // The pageXOffset and pageYOffset properties are equal to the scrollX and scrollY properties. These properties are read-only.
       point.x = x - evt.view.pageXOffset;
       point.y = y - evt.view.pageYOffset;
-      return point.matrixTransform(matrix.inverse());
+      return point.matrixTransform(matrix);
     };
 
-    //
-    // Called on mouse down in the chart.
-    //
-    vm.mouseDown = function (evt) {
-
-      vm.model.deselectAll();
-
-      dragging.startDrag(evt, {
-
-        //
-        // Commence dragging... setup variables to display the drag selection rect.
-        //
-        dragStarted: function (x, y) {
-          vm.dragSelecting = true;
-          var startPoint = vm.translateCoordinates(x, y, evt);
-          vm.dragSelectionStartPoint = startPoint;
-          vm.dragSelectionRect = {
-            x: startPoint.x,
-            y: startPoint.y,
-            width: 0,
-            height: 0,
-          };
-        },
-
-        //
-        // Update the drag selection rect while dragging continues.
-        //
-        dragging: function (x, y) {
-          var startPoint = vm.dragSelectionStartPoint;
-          var curPoint = vm.translateCoordinates(x, y, evt);
-
-          vm.dragSelectionRect = {
-            x: curPoint.x > startPoint.x ? startPoint.x : curPoint.x,
-            y: curPoint.y > startPoint.y ? startPoint.y : curPoint.y,
-            width: curPoint.x > startPoint.x ? curPoint.x - startPoint.x : startPoint.x - curPoint.x,
-            height: curPoint.y > startPoint.y ? curPoint.y - startPoint.y : startPoint.y - curPoint.y,
-          };
-        },
-
-        //
-        // Dragging has ended... select all that are within the drag selection rect.
-        //
-        dragEnded: function () {
-          vm.dragSelecting = false;
-          vm.model.applySelectionRect(vm.dragSelectionRect);
-          delete vm.dragSelectionStartPoint;
-          delete vm.dragSelectionRect;
-        },
-      });
+    // on mouse down in editor, deselect all items and start drawing
+    vm.editorMouseDown = function (evt) {
+      vm.deselectAll();
+      console.log(evt);
+      vm.startDraggingSelectionRect(evt);
+      //TODO maybe i need mouse coordinates also
     };
+
+    vm.startDraggingSelectionRect = function (evt) {
+      console.log('TODO startDraggingSelectionRect function');
+    };
+
+
+    // {
+    //   dragging.startDrag(evt, {
+    //
+    //     //
+    //     // Commence dragging... setup variables to display the drag selection rect.
+    //     //
+    //     dragStarted: function (x, y) {
+    //       vm.dragSelecting = true;
+    //       var startPoint = vm.translateCoordinates(x, y, evt);
+    //       vm.dragSelectionStartPoint = startPoint;
+    //       vm.dragSelectionRect = {
+    //         x: startPoint.x,
+    //         y: startPoint.y,
+    //         width: 0,
+    //         height: 0,
+    //       };
+    //     },
+    //
+    //     //
+    //     // Update the drag selection rect while dragging continues.
+    //     //
+    //     dragging: function (x, y) {
+    //       var startPoint = vm.dragSelectionStartPoint;
+    //       var curPoint = vm.translateCoordinates(x, y, evt);
+    //
+    //       vm.dragSelectionRect = {
+    //         x: curPoint.x > startPoint.x ? startPoint.x : curPoint.x,
+    //         y: curPoint.y > startPoint.y ? startPoint.y : curPoint.y,
+    //         width: curPoint.x > startPoint.x ? curPoint.x - startPoint.x : startPoint.x - curPoint.x,
+    //         height: curPoint.y > startPoint.y ? curPoint.y - startPoint.y : startPoint.y - curPoint.y,
+    //       };
+    //     },
+    //
+    //     //
+    //     // Dragging has ended... select all that are within the drag selection rect.
+    //     //
+    //     dragEnded: function () {
+    //       vm.dragSelecting = false;
+    //       vm.model.applySelectionRect(vm.dragSelectionRect);
+    //       delete vm.dragSelectionStartPoint;
+    //       delete vm.dragSelectionRect;
+    //     },
+    //   });
+    // };
 
     //
     // Called for each mouse move on the svg element.

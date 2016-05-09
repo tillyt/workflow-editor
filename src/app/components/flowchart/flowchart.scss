@@ -15,19 +15,12 @@ $font-size-large: 22px;
   color: #ffffff;
 }
 
-.svg-container {
-  svg {
-    padding: 20px;
-    position: relative;
-    font-weight: 300;
-    cursor: crosshair;
-    text-rendering: optimizeLegibility;
-
-  }
-}
-rect {
-  cursor: move;
-  padding: 10px;
+#svg-container {
+  padding: 20px;
+  position: relative;
+  font-weight: 300;
+  cursor: crosshair;
+  text-rendering: optimizeLegibility;
 }
 
 .draggable-object {
@@ -50,6 +43,7 @@ Styles for nodes and connectors.
 .node-rect {
   stroke: black;
   stroke-width: 0.25;
+  padding: 15px;
 }
 
 .node-rect:hover {
