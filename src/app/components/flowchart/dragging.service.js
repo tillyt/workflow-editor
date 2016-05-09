@@ -5,7 +5,7 @@
     .module('workflowEditor')
     .factory('dragging', dragging);
 
-  function dragging(mouseCapture) {
+  function dragging(mouseCoordinates) {
 
     //
     // Threshold for dragging.
@@ -72,14 +72,14 @@
         // Mouseup releases the mouse capture.
         var mouseUp = function (evt) {
 
-          mouseCapture.release();
+          mouseCoordinates.release();
 
           evt.stopPropagation();
           evt.preventDefault();
         };
 
         // Acquire the mouse capture and start handling mouse events.
-        mouseCapture.acquire(evt, {
+        mouseCoordinates.acquire(evt, {
           mouseMove: mouseMove,
           mouseUp: mouseUp,
           released: released

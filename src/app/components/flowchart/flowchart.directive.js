@@ -9,7 +9,8 @@
   function flowchart() {
     return {
       restrict: 'E',
-      templateUrl: "app/components/flowchart/flowchart.tmpl.html",
+      type: 'svg',
+      templateUrl: "app/components/flowchart/flowchart.tmpl.svg",
       replace: true,
       scope: {
         model: "="
