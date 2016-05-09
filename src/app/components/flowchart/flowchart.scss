@@ -70,6 +70,12 @@ Styles for nodes and connectors.
   cursor: crosshair;
 }
 
+.selected-connector-circle {
+  fill: white;
+  stroke: black;
+  stroke-width: 2;
+}
+
 .node-name {
   font-size: 12px;
   font-weight: bold;
@@ -80,69 +86,69 @@ Styles for nodes and connectors.
 }
 
 /*
-Style for connections.
+Style for edges.
 */
 
-.connection {
+.edge {
 }
 
-.connection-line {
+.edge-line {
   stroke: gray;
   stroke-width: 1;
   fill: transparent;
 }
 
-.connection-line:hover {
+.edge-line:hover {
   stroke: gray;
   stroke-width: 2;
   fill: transparent;
 }
 
-.selected-connection-line {
+.selected-edge-line {
   stroke: red;
   stroke-width: 4;
   fill: transparent;
 }
 
-.connection-endpoint {
+.edge-endpoint {
   fill: gray;
 }
 
-.selected-connection-endpoint {
+.selected-edge-endpoint {
   fill: red;
 }
 
-.mouseover-connection-endpoint {
+.mouseover-edge-endpoint {
   fill: gray;
 }
 
-.connection-name {
+.edge-name {
   fill: black;
 }
 
-.selected-connection-name {
+.selected-edge-name {
   fill: red;
 }
 
-.mouseover-connection-name {
+.mouseover-edge-name {
   fill: gray;
 }
 
 /*
-Style for the connection being dragged out.
+Style for the edge being dragged out.
 */
 
-.dragging-connection {
+.dragging-edge {
   pointer-events: none;
 }
 
-.dragging-connection-line {
+.dragging-edge-line {
   stroke: gray;
   stroke-width: 3;
   fill: transparent;
 }
 
-.dragging-connection-endpoint {
+.dragging-edge-endpoint {
   fill: gray;
 }
 

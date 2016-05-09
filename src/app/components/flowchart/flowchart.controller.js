@@ -41,17 +41,13 @@
     vm.currentlyDrawingEdge = false;
     vm.currentlyDrawingSelectionRect = false;
 
-    vm.selectedItems = [];
+    vm.selectionRect = null;
 
-    vm.deselectAll = function () {
-      //TODO
-      console.log('TODO deselectAll function');
-      return;
-    };
+    // store IDs of selected nodes and edges
+    vm.selectedNodes = [];
+    vm.selectedEdges = [];
 
 
-
-    console.log($element[0].getScreenCTM());
 
 
     // translate the coordinates so they are relative to the svg element
@@ -70,36 +66,74 @@
       return point.matrixTransform(matrix);
     };
 
-    // on mouse down in editor, deselect all items and start drawing
+    // MOUSE HANDLERS FOR EDITOR
+
     vm.editorMouseDown = function (evt) {
+      // on mouse down in editor, deselect all items and start drawing
       vm.deselectAll();
-      console.log(evt);
-      vm.startDraggingSelectionRect(evt);
-      //TODO maybe i need mouse coordinates also
+      // start point relative to viewport
+      var startX = evt.clientX;
+      var startY = evt.clientY;
+      // translate coordinates so they're relative to the svg element
+      var startPoint = vm.translateCoordinates(startX, startY, evt);
+      // start drawing rect
+      vm.currentlyDrawingSelectionRect = true;
+      vm.selectionRect = {
+        x: startPoint.x,
+        y: startPoint.y,
+        width: 0,
+        height: 0
+      };
     };
 
-    vm.startDraggingSelectionRect = function (evt) {
-      console.log('TODO startDraggingSelectionRect function');
+    vm.editorMouseMove = function (evt) {
+      if (vm.currentlyDrawingSelectionRect) {
+        // if drawing a selection rectangle, keep updating dimensions as mouse moves
+        // get current point relative to SVG
+        var currentPoint = vm.translateCoordinates(evt.clientX, evt.clientY, evt);
+        vm.selectionRect.width = currentPoint.x - vm.selectionRect.x;
+        vm.selectionRect.height = currentPoint.y - vm.selectionRect.y;
+        // update selected items as you drag
+        vm.applySelectionRect(vm.selectionRect.x, vm.selectionRect.y, currentPoint.x, currentPoint.y);
+      }
+    };
+
+    vm.editorMouseUp = function (evt) {
+      vm.currentlyDrawingSelectionRect = false;
+      var endPoint = vm.translateCoordinates(evt.clientX, evt.clientY, evt);
+      vm.applySelectionRect(vm.selectionRect.x, vm.selectionRect.y, endPoint.x, endPoint.y);
+    };
+
+    vm.applySelectionRect = function (x1, y1, x2, y2) {
+      angular.forEach(vm.model.nodes, function (node, id) {
+        var rectWideEnough = Math.abs(x1 - x2) > vm.width(node);
+        var rectTallEnough = Math.abs(y1 - y2) > vm.nodeHeight;
+        var containedWidthwise = (node.x < x1 && node.x > x2) || (node.x < x2 && node.x > x1);
+        var containedHeightwise = (node.x < x1 && node.x > x2) || (node.x < x2 && node.x > x1);
+        if (rectWideEnough && rectTallEnough && containedWidthwise && containedHeightwise) {
+          vm.selected.push(id);
+        }
+      });
+    };
+
+    vm.deselectAll = function () {
+      vm.selectedNodes = [];
+      vm.selectedEdges = [];
+    };
+
+    vm.isNodeSelected = function (id) {
+      return (selectedNodes.indexOf(id) != -1);
+    };
+
+    vm.isEdgeSelected = function (id) {
+      return (selectedEdges.indexOf(id) != -1);
     };
 
 
-    // {
-    //   dragging.startDrag(evt, {
-    //
-    //     //
-    //     // Commence dragging... setup variables to display the drag selection rect.
-    //     //
-    //     dragStarted: function (x, y) {
-    //       vm.dragSelecting = true;
-    //       var startPoint = vm.translateCoordinates(x, y, evt);
-    //       vm.dragSelectionStartPoint = startPoint;
-    //       vm.dragSelectionRect = {
-    //         x: startPoint.x,
-    //         y: startPoint.y,
-    //         width: 0,
-    //         height: 0,
-    //       };
-    //     },
+
+
+
+
     //
     //     //
     //     // Update the drag selection rect while dragging continues.

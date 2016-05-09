@@ -6,6 +6,8 @@
   width="100%"
   ng-attr-height="{{vm.editorHeight}}"
   ng-mousedown="vm.editorMouseDown($event)"
+  ng-mousemove="vm.editorMouseMove($event)"
+  ng-mouseup="vm.editorMouseUp($event)"
 >
 
   <g
@@ -25,7 +27,7 @@
       ng-attr-height="{{vm.nodeHeight}}"
       fill="#cccccc"
       ng-mousedown="vm.nodeMouseDown($event, node)"
-      ng-class="vm.selectedNode == node ? 'selected-node-rect' : 'node-rect'"
+      ng-class="vm.isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
     >
     </rect>
 
@@ -58,7 +60,7 @@
         r="4"
         ng-attr-cx="{{28 + ($index*14)}}"
         cy="0"
-        class="connector-circle"
+        ng-class="vm.isNodeSelected(id) ? 'selected-connector-circle' : 'connector-circle'"
         ng-mouseenter="showText=true"
         ng-mouseleave="showText=false"
       />
@@ -83,7 +85,7 @@
         r="4"
         ng-attr-cx="{{28 + ($index*14)}}"
         ng-attr-cy="{{vm.nodeHeight}}"
-        class="connector-circle"
+        ng-class="vm.isNodeSelected(id) ? 'selected-connector-circle' : 'connector-circle'"
         ng-mouseenter="showText=true"
         ng-mouseleave="showText=false"
       />
@@ -96,7 +98,7 @@
     class="edge"
   >
     <path
-      ng-attr-class="{{edge.selected() && 'selected-edge-line' || (edge == mouseOveredge && 'mouseover-edge-line' || 'edge-line')}}"
+      ng-class="vm.isEdgeSelected(id) ? 'selected-edge' : 'edge'"
       ng-attr-d="M {{edge.sourceCoordX()}}, {{edge.sourceCoordY()}}
   C {{edge.sourceTangentX()}}, {{edge.sourceTangentY()}}
   {{edge.destTangentX()}}, {{edge.destTangentY()}}
@@ -104,7 +106,7 @@
     >
     </path>
     <circle
-      ng-attr-class="{{edge.selected() && 'selected-edge-endpoint' || (edge == mouseOveredge && 'mouseover-edge-endpoint' || 'edge-endpoint')}}"
+      ng-class="vm.isEdgeSelected(id) ? 'selected-edge-endpoint' : 'edge-endpoint'"
       r="4"
       ng-attr-cx="{{edge.sourceCoordX()}}"
       ng-attr-cy="{{edge.sourceCoordY()}}"
@@ -112,7 +114,7 @@
     </circle>
 
     <circle
-      ng-attr-class="{{edge.selected() && 'selected-edge-endpoint' || (edge == mouseOveredge && 'mouseover-edge-endpoint' || 'edge-endpoint')}}"
+      ng-class="vm.isEdgeSelected(id) ? 'selected-edge-endpoint' : 'edge-endpoint'"
       r="4"
       ng-attr-cx="{{edge.destCoordX()}}"
       ng-attr-cy="{{edge.destCoordY()}}"
@@ -121,7 +123,7 @@
   </g>
 
   <g
-    ng-if="vm.draggingedge"
+    ng-if="vm.currentlyDrawingEdge"
   >
     <path
       class="dragging-edge dragging-edge-line"
@@ -149,13 +151,18 @@
     </circle>
   </g>
 
+
+
   <rect
-    ng-if="vm.dragSelecting"
+    ng-if="vm.currentlyDrawingSelectionRect"
     class="drag-selection-rect"
-    ng-attr-x="{{dragSelectionRect.x}}"
-    ng-attr-y="{{dragSelectionRect.y}}"
-    ng-attr-width="{{dragSelectionRect.width}}"
-    ng-attr-height="{{dragSelectionRect.height}}"
+    ng-attr-x="{{vm.selectionRect.x}}"
+    ng-attr-y="{{vm.selectionRect.y}}"
+    ng-attr-width="{{vm.selectionRect.width}}"
+    ng-attr-height="{{vm.selectionRect.height}}"
   >
   </rect>
+
+
+
 </svg>
