@@ -21,7 +21,7 @@ gulp.task('partials', function () {
     }))
     .pipe($.angularTemplatecache('templateCacheHtml.js', {
       module: 'workflowEditor',
-      root: 'app'
+      root: 'workflowEditor'
     }))
     .pipe(gulp.dest(conf.paths.tmp + '/partials/'));
 });

@@ -1,7 +1,8 @@
 (function(){
   'use strict';
 
-  angular.module('workflowEditor')
+  angular
+    .module('workflowEditor')
     .service('modelService', [
       modelService
     ]);
@@ -38,7 +39,7 @@
 
     return {
       getModel: function() {
-        return model.model;
+        return angular.copy(model.model);
       },
       addNode: function (nipype_interface) {
         current_nodes.nodes[next_node_id]={

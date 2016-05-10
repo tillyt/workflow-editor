@@ -1,44 +1,10 @@
-// COLORS
-$main-bg-color: #ECECEC;
-$text-color: #7A7A7A;
-$accent-color: rgb(0, 150, 136);
-$warning-color: #E75753;
-
-// VARIABLES
-$left-sidenav-width: 110px; //250px;
-$widget-height: 310px;
-$font-weight-bold: 600;
-$font-size-large: 22px;
-
-.node-type {
-  background-color: #ececec;
-  color: #ffffff;
-}
-
 #svg-container {
-  padding: 20px;
+  padding: 2px;
   position: relative;
   font-weight: 300;
   cursor: crosshair;
   text-rendering: optimizeLegibility;
 }
-
-.draggable-object {
-  cursor: move !important; /* fallback: no `url()` support or images disabled */
-  cursor: -webkit-grab !important; /* Chrome 1-21, Safari 4+ */
-  cursor: -moz-grab !important; /* Firefox 1.5-26 */
-  cursor: grab !important; /* W3C standards syntax, should come least */
-}
-
-.draggable-object:active {
-  cursor: -webkit-grabbing !important;
-  cursor: -moz-grabbing !important;
-  cursor: grabbing !important;
-}
-
-/*
-Styles for nodes and connectors.
-*/
 
 .node-rect {
   stroke: black;
@@ -84,10 +50,6 @@ Styles for nodes and connectors.
 .connector-name {
   font-size: 10px;
 }
-
-/*
-Style for edges.
-*/
 
 .edge {
 }

@@ -20,11 +20,19 @@ $icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/"
 }
 
 body {
-  padding-top: 170px;
+  padding-top: 56px;
+  padding-left: 5px;
+  padding-right: 5px;
   margin: 5px;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   background-image: url("../assets/images/noisy_grid.png");
+  overflow-x: hidden;
 }
+/* prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+}
+
 
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject

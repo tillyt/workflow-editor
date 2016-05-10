@@ -3,7 +3,7 @@
   id="svg-container"
   x="0"
   y="0"
-  width="100%"
+  ng-attr-width="{{vm.editorWidth}}"
   ng-attr-height="{{vm.editorHeight}}"
   ng-mousedown="vm.editorMouseDown($event)"
   ng-mousemove="vm.editorMouseMove($event)"
@@ -12,24 +12,25 @@
 
   <g
     ng-repeat="(id, node) in vm.model.nodes"
-    ng-attr-transform="translate({{node.x}}, {{node.y}})"
+    ng-attr-id="{{node.id}}"
     ng-attr-x="{{node.x}}"
     ng-attr-y="{{node.y}}"
-    ng-attr-id="{{node.id}}"
     ng-mousedown="vm.nodeMouseDown($event, node)"
     ng-mousemove="vm.nodeMouseMove($event, node)"
     ng-mouseup="vm.nodeMouseUp($event, node)"
+    ng-init="hovering=false"
+    draggable="vm.nodeDragOptions"
   >
 
     <rect
       ry="8"
       rx="8"
-      x="0"
-      y="0"
       ng-attr-width="{{vm.width(node)}}"
       ng-attr-height="{{vm.nodeHeight}}"
       fill="#cccccc"
       ng-class="vm.isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
+      ng-mouseenter="hovering=true"
+      ng-mouseleave="hovering=false"
     >
     </rect>
 
@@ -43,13 +44,42 @@
       {{node.interface.name}}
     </text>
 
+
+    <g
+      id="delete-button"
+      ng-if="hovering && node.interface.name != 'input dataset'"
+      ng-click="vm.deleteNode(node.id)"
+    >
+      <circle
+        ng-attr-cx="{{node.x + vm.width(node) - 6}}"
+        ng-attr-cy="{{node.y + 6}}"
+        r="12"
+        fill="black"
+        stroke="white"
+        stroke-width="4"
+        ng-class="vm.isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
+      >
+      </circle>
+      <text
+        ng-attr-y="{{node.y + 6}}"
+        ng-attr-x="{{node.x + vm.width(node) - 6}}"
+        fill="white"
+        text-anchor="middle"
+        alignment-baseline="middle"
+        class="node-name"
+      >
+        X
+      </text>
+    </g>
+
+
     <g
       ng-repeat="(input, value) in node.interface.inputs"
       class="connector input-connector" ng-init="showText=false"
     >
       <text
         ng-if="showText"
-        y="10"
+        ng-attr-y="{{node.y+10}}"
         ng-attr-x="{{28 + ($index*14)}}"
         text-anchor="middle"
         alignment-baseline="middle"
@@ -75,7 +105,7 @@
       <text
         ng-if="showText"
         ng-attr-x="{{28 + ($index*14)}}"
-        ng-attr-y="{{vm.nodeHeight-10}}"
+        ng-attr-y="{{node.x + (vm.nodeHeight-10)}}"
         text-anchor="middle"
         alignment-baseline="middle"
         class="connector-name"
@@ -102,9 +132,9 @@
     <path
       ng-class="vm.isEdgeSelected(id) ? 'selected-edge' : 'edge'"
       ng-attr-d="M {{edge.sourceCoordX()}}, {{edge.sourceCoordY()}}
-  C {{edge.sourceTangentX()}}, {{edge.sourceTangentY()}}
-  {{edge.destTangentX()}}, {{edge.destTangentY()}}
-  {{edge.destCoordX()}}, {{edge.destCoordY()}}"
+C {{edge.sourceTangentX()}}, {{edge.sourceTangentY()}}
+{{edge.destTangentX()}}, {{edge.destTangentY()}}
+{{edge.destCoordX()}}, {{edge.destCoordY()}}"
     >
     </path>
     <circle
@@ -130,9 +160,9 @@
     <path
       class="dragging-edge dragging-edge-line"
       ng-attr-d="M {{vm.dragPoint1.x}}, {{vm.dragPoint1.y}}
-  C {{vm.dragTangent1.x}}, {{vm.dragTangent1.y}}
-  {{vm.dragTangent2.x}}, {{vm.dragTangent2.y}}
-  {{vm.dragPoint2.x}}, {{vm.dragPoint2.y}}"
+C {{vm.dragTangent1.x}}, {{vm.dragTangent1.y}}
+{{vm.dragTangent2.x}}, {{vm.dragTangent2.y}}
+{{vm.dragPoint2.x}}, {{vm.dragPoint2.y}}"
     >
     </path>
 
@@ -158,11 +188,9 @@
     ng-if="vm.currentlyDrawingSelectionRect"
   >
     <path
-      ng-attr-d="M {{vm.dragSelectionRect.x1}},{{vm.dragSelectionRect.y1}} {{vm.dragSelectionRect.x2}},{{vm.dragSelectionRect.y1}} {{vm.dragSelectionRect.x2}},{{vm.dragSelectionRect.y2}} {{vm.dragSelectionRect.x1}},{{vm.dragSelectionRect.y2}}"
-      class="dragging-edge" />
+      ng-attr-d="M {{vm.dragSelectionRect.x1}},{{vm.dragSelectionRect.y1}} H {{vm.dragSelectionRect.x2}} V {{vm.dragSelectionRect.y2}} H {{vm.dragSelectionRect.x1}} Z"
+      class="dragging-edge"/>
   </g>
-
-
 
 
 </svg>

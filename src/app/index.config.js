@@ -13,9 +13,11 @@
     // Set options third-party lib
     toastrConfig.allowHtml = true;
     toastrConfig.timeOut = 3000;
-    toastrConfig.positionClass = 'toast-top-right';
+    toastrConfig.positionClass = 'toast-top-left';
     toastrConfig.preventDuplicates = true;
     toastrConfig.progressBar = true;
   }
 
 })();
+
+// ng-attr-transform="translate({{node.x}}, {{node.y}})"

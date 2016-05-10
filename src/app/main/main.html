@@ -1,9 +1,15 @@
-<toolbar packages="main.packages" model="main.model"></toolbar>
+<nav class="navbar navbar-fixed-top navbar-default container-fluid">
+  <div class="container-fluid">
+    <div class="nav navbar-nav">
+      <a href="http://nipy.org/nipype/" class="pull-left"><img height="50" src="assets/images/nipy.png"></a>
+      <span class="navbar-brand pull-left"> &nbsp; Nipype Workflow Editor </span>
+      <button ng-click="main.openAside()" class="pull-right btn btn-success btn-md" type="button">
+        Add Node
+      </button>
+    </div>
+  </div>
+</nav>
 
 
 
-<flowchart
-  style="margin: 5px; width: 100%; height: 1000px;"
-  model="main.model">
-</flowchart>
-
+<workflow />

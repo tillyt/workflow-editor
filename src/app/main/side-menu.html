@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <h3 class="modal-title">Nipype Interfaces</h3>
+</div>
+<div class="modal-body">
+  Look i'm in aside.
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok($event)">OK</button>
+  <button class="btn btn-warning" ng-click="cancel($event)">Cancel</button>
+</div>
+
+<div class="col-lg-12">
+  <h1>
+    <a href="http://nipy.org/nipype/"><img src="assets/images/nipy.png" alt="NiPy logo"></a>&nbsp;
+    Workflow Editor
+  </h1>
+</div>
+<div class="container-fluid">
+  <div class="nav navbar-nav">
+    <ul class="nav navbar-nav">
+      <!--TODO make accordion-->
+      <li uib-dropdown>
+        <a href="#" uib-dropdown-toggle>
+          <i class="fa fa-code-fork" aria-hidden="true"></i>
+          Nipype Interfaces
+          <b class='caret'></b>
+        </a>
+        <tree tree='vm.tree'></tree>
+      </li>
+
+      <li>
+        <form class="navbar-form" role="search">
+          <div class="form-group">
+            <input type="text" placeholder="Search for an Interface" ng-model="selected" uib-typeahead-wait-ms="100" uib-typeahead-min-length="3"
+                   uib-typeahead="interface for interface in vm.interface_names | filter:$viewValue | limitTo:10"
+                   class="form-control" uib-typeahead-no-results="noMatch">
+
+          </div>
+          <button type="submit" ng-show="selected && (!noMatch)" ng-click="vm.onSelectNode(selected)" class="btn btn-success">Add</button>
+        </form>
+      </li>
+
+      <li><a href="#" >
+        <i class="fa fa-upload" aria-hidden="true"></i>
+        Load
+      </a></li>
+      <li><a ng-click="vm.downloadJSON()">
+        <i class="fa fa-download" aria-hidden="true"></i>
+        Download
+      </a></li>
+    </ul>
+
+  </div>
+</div>

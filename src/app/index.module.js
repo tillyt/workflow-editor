@@ -9,7 +9,8 @@
       'toastr',
       'ngFileSaver',
       'LocalStorageModule',
-      'sd'
+      'ngAside',
+      'cn.offCanvas'
     ]);
 
 })();
