@@ -14,7 +14,7 @@
       transclude: true,
       scope: {
         model: '=',
-        nodeWidth: '&',
+        defaultNodeWidth: '=',
         nodeHeight: '=',
         editorWidth: '=',
         editorHeight: '='
