@@ -28,7 +28,7 @@
     </button>
     <div uib-collapse="!expanded" ng-repeat="(index, interface_object) in menu.interfacesByCategory(category)">
       <div ng-repeat="(interface, name) in interface_object" ng-init="even=index%2">
-        <button type="button" ng-click="menu.selectItem(interface, null, null)"
+        <button type="button" ng-click="menu.selectItem(interface, null, name)"
                 ng-class="even==0 ? 'btn btn-primary btn-block' : 'btn btn-primary btn-block'">
           {{name}}
         </button>

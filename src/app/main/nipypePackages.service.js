@@ -1,7 +1,8 @@
 (function () {
   'use strict';
 
-  angular.module('workflowEditor')
+  angular
+    .module('workflowEditor')
     .service('nipypePackages', nipypePackages);
 
   function nipypePackages() {

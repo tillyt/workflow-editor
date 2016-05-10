@@ -75,7 +75,7 @@
 
 //
 // link: function (scope, elem, attr) {
-//   console.log(elem);
+//    (elem);
 //   var startX, startY, x = 0, y = 0;
 //   var container;
 //   var startCallback, dragCallback, stopCallback;
@@ -86,7 +86,7 @@
 //     stopCallback = scope.dragOptions.stopCallback;
 //   }
 //
-//   console.log(elem.children()[0]);
+//    (elem.children()[0]);
 //
 //   // Bind mousedown event
 //   elem.on('mousedown', function (e) {

@@ -69,9 +69,10 @@
             menu.interfacesByCategory = function (category) {
               return menu.organizedInterfaces[category];
             };
-            menu.selectItem = function (interface_name, model, label) {
-              modelService.addNewNode(menu.interfaces[interface_name]);
+            menu.selectItem = function (interface_full_name, model, interface_name) {
               $uibModalInstance.dismiss();
+              main.showToastr('Adding ' + interface_name + ' to workflow');
+              main.addNewNode(menu.interfaces[interface_full_name]);
               main.menuOpen = false;
             };
 
@@ -110,11 +111,10 @@
       FileSaver.saveAs(blob, "workflow.json");
     };
 
-    
+
 
     main.addNewNode = function (nipype_interface) {
-      main.showToastr('Adding ' + nipype_interface + ' to workflow');
-      modelService.addNode(nipype_interface);
+      modelService.addNewNode(nipype_interface);
     };
 
 
@@ -142,11 +142,12 @@
     main.deleteNode = function (node_id) {
       //TODO
       console.log('TODO delete node');
-      // main.model.deleteSelected();
+      // main.modelService.deleteSelected();
     };
 
     main.editorWidth = $window.innerWidth;
     main.editorHeight = $window.innerHeight;
+
 
     main.selectedItems = [];
 

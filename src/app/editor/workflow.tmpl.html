@@ -7,20 +7,19 @@
   ng-attr-height="{{editorHeight}}"
 >
 
-
   <g
     ng-repeat="(id, node) in model.nodes"
     ng-attr-id="{{node.id}}"
     ng-attr-x="{{node.x}}"
     ng-attr-y="{{node.y}}"
     ng-init="hovering=false"
-    draggable="{bottom: editorHeight - nodeHeight, right: editorWidth - nodeWidth({nodeobj:node}) - 20}"
+    draggable="{right: editorWidth - nodeWidth({nodeobj:node}) - 7}"
   >
 
     <rect
       ry="8"
       rx="8"
-      ng-attr-width="{{nodeWidth({nodeobj:node})}}"
+      ng-attr-width="{{nodeWidth({nodeobj:node}) || 150}}"
       ng-attr-height="{{nodeHeight}}"
       fill="#cccccc"
       ng-class="isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"

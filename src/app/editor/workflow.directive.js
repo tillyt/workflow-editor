@@ -22,8 +22,7 @@
         selectedItems: '='
       },
       link: function (scope, elem, attrs) {
-        console.log(scope);
-        console.log(scope.model.nodes);
+
 
         scope.$watch('model', function (value) {
           // var currentDate = moment(attrs.calendarDay, "DD-MM-YYYY");
