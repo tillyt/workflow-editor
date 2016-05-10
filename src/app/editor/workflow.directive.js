@@ -50,6 +50,9 @@
 
 
 
+      },
+      link: function (scope, elem, attrs) {
+        console.log(scope.model);
       }
 
 
