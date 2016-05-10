@@ -145,17 +145,10 @@
       // main.model.deleteSelected();
     };
 
-    main.editorHeight = function () {
-      return $window.innerHeight;
-    };
-
     main.editorWidth = $window.innerWidth;
+    main.editorHeight = $window.innerHeight;
 
     main.selectedItems = [];
-
-    main.nodeDragOptions = {
-      container: {left: 0, top: 0, bottom: main.editorHeight(), right: main.editorWidth - 150 - 20}
-    };
 
 
     // node width determined based on width of connectors or name, whichever's bigger

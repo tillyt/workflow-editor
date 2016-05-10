@@ -16,8 +16,8 @@
         model: '=',
         nodeWidth: '&',
         nodeHeight: '=',
-        editorHeight: '&',
         editorWidth: '=',
+        editorHeight: '=',
         deleteNode: '&',
         selectedItems: '='
       },

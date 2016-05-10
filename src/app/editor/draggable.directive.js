@@ -40,13 +40,13 @@
           // Move element, within container if provided
           function setPosition() {
             if (container) {
-              if (x < container.left) {
-                x = container.left;
+              if (x < 0) {
+                x = 0;
               } else if (x > container.right) {
                 x = container.right;
               }
-              if (y < container.top) {
-                y = container.top;
+              if (y < 0) {
+                y = 0;
               } else if (y > container.bottom) {
                 y = container.bottom;
               }

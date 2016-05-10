@@ -4,10 +4,7 @@
   x="0"
   y="0"
   ng-attr-width="{{editorWidth}}"
-  ng-attr-height="{{editorHeight()}}"
-  ng-mousedown="vm.editorMouseDown($event)"
-  ng-mousemove="vm.editorMouseMove($event)"
-  ng-mouseup="vm.editorMouseUp($event)"
+  ng-attr-height="{{editorHeight}}"
 >
 
 
@@ -17,18 +14,13 @@
     ng-attr-x="{{node.x}}"
     ng-attr-y="{{node.y}}"
     ng-init="hovering=false"
-    draggable="{left: 0, top: 0, bottom: editorHeight(), right: editorWidth - nodeWidth() - 20}"
+    draggable="{bottom: editorHeight - nodeHeight, right: editorWidth - nodeWidth({nodeobj:node}) - 20}"
   >
-
-    <text x="0" y="100" class="node-name"
-    >
-
-    </text>
 
     <rect
       ry="8"
       rx="8"
-      ng-attr-width="{{nodeWidth(node)}}"
+      ng-attr-width="{{nodeWidth({nodeobj:node})}}"
       ng-attr-height="{{nodeHeight}}"
       fill="#cccccc"
       ng-class="isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
@@ -38,7 +30,7 @@
     </rect>
 
     <text
-      ng-attr-x="{{nodeWidth(node)/2}}"
+      ng-attr-x="{{nodeWidth({nodeobj:node})/2}}"
       ng-attr-y="{{nodeHeight/2}}"
       text-anchor="middle"
       alignment-baseline="middle"
@@ -54,7 +46,7 @@
       ng-click="deleteNode(node.id)"
     >
       <circle
-        ng-attr-cx="{{node.x + nodeWidth(node) - 6}}"
+        ng-attr-cx="{{node.x + nodeWidth({nodeobj:node}) - 6}}"
         ng-attr-cy="{{node.y + 6}}"
         r="12"
         fill="black"
@@ -65,7 +57,7 @@
       </circle>
       <text
         ng-attr-y="{{node.y + 6}}"
-        ng-attr-x="{{node.x + nodeWidth(node) - 6}}"
+        ng-attr-x="{{node.x + nodeWidth({nodeobj:node}) - 6}}"
         fill="white"
         text-anchor="middle"
         alignment-baseline="middle"
