@@ -110,19 +110,7 @@
       FileSaver.saveAs(blob, "workflow.json");
     };
 
-
-    // keyboard shortcuts
-
-    var keyCodes = {17: 'ctrl', 8: 'del', 27: 'esc', 65: 'a', 78: 'n'};
-    var ctrlDown = false;
-
-    main.keyDown = function (e) {
-      if (keyCodes[e.keyCode] === 'ctrl') {
-        ctrlDown = true;
-        e.stopPropagation();
-        e.preventDefault();
-      }
-    };
+    
 
     main.addNewNode = function (nipype_interface) {
       main.showToastr('Adding ' + nipype_interface + ' to workflow');
