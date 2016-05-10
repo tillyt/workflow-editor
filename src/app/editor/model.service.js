@@ -3,9 +3,7 @@
 
   angular
     .module('workflowEditor')
-    .service('modelService', [
-      modelService
-    ]);
+    .service('modelService', modelService);
 
   function modelService() {
 
