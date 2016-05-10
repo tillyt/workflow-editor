@@ -22,9 +22,8 @@
       ng-attr-width="{{vm.nodeWidth(node)}}"
       ng-attr-height="{{vm.nodeHeight}}"
       fill="#cccccc"
-      ng-class="isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
-      ng-mouseenter="hovering=true"
-      ng-mouseleave="hovering=false"
+      ng-class="vm.isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
+      ng-click="vm.selectNode(id)"
     >
     </rect>
 
@@ -37,34 +36,6 @@
     >
       {{node.interface.name}}
     </text>
-
-
-    <g
-      id="delete-button"
-      ng-if="hovering && node.interface.name != 'input dataset'"
-      ng-click="vm.deleteNode(node.id)"
-    >
-      <circle
-        ng-attr-cx="{{node.x + vm.nodeWidth(node) - 6}}"
-        ng-attr-cy="{{node.y + 6}}"
-        r="12"
-        fill="black"
-        stroke="white"
-        stroke-width="4"
-        ng-class="isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
-      >
-      </circle>
-      <text
-        ng-attr-y="{{node.y + 6}}"
-        ng-attr-x="{{node.x + vm.nodeWidth(node) - 6}}"
-        fill="white"
-        text-anchor="middle"
-        alignment-baseline="middle"
-        class="node-name"
-      >
-        X
-      </text>
-    </g>
 
 
     <g

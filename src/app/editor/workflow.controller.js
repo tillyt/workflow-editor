@@ -56,7 +56,8 @@
     vm.editorHeight = $window.innerHeight;
 
 
-    vm.selectedItems = [];
+    vm.selectedNodes = [];
+    vm.selectedEdges = [];
 
     // node width determined based on width of connectors or name, whichever's bigger
     vm.nodeWidth = function (node) {
@@ -73,6 +74,18 @@
       }
     };
 
+    vm.isNodeSelected = function(id) {
+      return (vm.selectedNodes.indexOf(id) != -1);
+    };
+
+    vm.selectNode = function (id) {
+     if (vm.isNodeSelected(id)) {
+       vm.selectedNodes.push()
+     } else {
+       vm.selectedNodes = vm.selectedNodes.splice(vm.selectedNodes.indexOf(id), 1);
+     }
+
+    };
 
 
   }
