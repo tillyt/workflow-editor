@@ -20,11 +20,11 @@
   <div ng-init="expanded=false">
     <button type="button" class="btn btn-default btn-block" ng-click="expanded = !expanded">
          {{category | uppercase}}
-      <!--<span ng-if="expanded" class="pull-right glyphicon glyphicon-menu-up" aria-hidden="true"></span>-->
-      <!--<span ng-if="!expanded" class="pull-right glyphicon glyphicon-menu-down" aria-hidden="true"></span>-->
+      <span ng-if="expanded" class="pull-right glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+      <span ng-if="!expanded" class="pull-right glyphicon glyphicon-menu-down" aria-hidden="true"></span>
 
-      <span ng-if="expanded" class="pull-right glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-      <span ng-if="!expanded" class="pull-right glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <!--<span ng-if="expanded" class="pull-left glyphicon glyphicon-chevron-down" aria-hidden="true"></span>-->
+      <!--<span ng-if="!expanded" class="pull-left glyphicon glyphicon-chevron-right" aria-hidden="true"></span>-->
     </button>
     <div uib-collapse="!expanded" ng-repeat="(index, interface_object) in menu.interfacesByCategory(category)">
       <div ng-repeat="(interface, name) in interface_object" ng-init="even=index%2">

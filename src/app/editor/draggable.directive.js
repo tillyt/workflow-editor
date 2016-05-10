@@ -9,20 +9,11 @@
       return {
         restrict: 'A',
         scope: {
-          dragOptions: '=draggable'
+          container: '=draggable'
         },
         link: function (scope, elem, attr) {
-          // console.log(scope.)
           var startX, startY, x = 0, y = 0;
-          var container;
-          var startCallback, dragCallback, stopCallback;
-          if (scope.dragOptions) {
-            container = scope.dragOptions.container;
-            startCallback = scope.dragOptions.startCallback;
-            dragCallback = scope.dragOptions.dragCallback;
-            stopCallback = scope.dragOptions.stopCallback;
-          }
-
+          var container = scope.container;
 
           // Bind mousedown event
           elem.on('mousedown', function (e) {
@@ -31,7 +22,6 @@
             startY = e.clientY - y;
             $document.on('mousemove', mousemove);
             $document.on('mouseup', mouseup);
-            if (startCallback) startCallback(e);
           });
 
           // Handle drag event
@@ -39,14 +29,12 @@
             y = e.clientY - startY;
             x = e.clientX - startX;
             setPosition();
-            if (dragCallback) dragCallback(e);
           }
 
           // Unbind drag events
           function mouseup(e) {
             $document.unbind('mousemove', mousemove);
             $document.unbind('mouseup', mouseup);
-            if (stopCallback) stopCallback(e);
           }
 
           // Move element, within container if provided

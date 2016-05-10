@@ -38,8 +38,8 @@
       addNewNode: function (nipype_interface) {
         model.nodes[next_node_id] = {
           id: next_node_id,
-          x: 0,
-          y: 0,
+          x: (5*next_node_id),
+          y: (5*next_node_id),
           interface: nipype_interface
         };
         next_node_id++;

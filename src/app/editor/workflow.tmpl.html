@@ -3,40 +3,43 @@
   id="svg-container"
   x="0"
   y="0"
-  ng-attr-width="{{vm.editorWidth}}"
-  ng-attr-height="{{vm.editorHeight}}"
+  ng-attr-width="{{editorWidth}}"
+  ng-attr-height="{{editorHeight()}}"
   ng-mousedown="vm.editorMouseDown($event)"
   ng-mousemove="vm.editorMouseMove($event)"
   ng-mouseup="vm.editorMouseUp($event)"
 >
 
+
   <g
-    ng-repeat="(id, node) in vm.model.nodes"
+    ng-repeat="(id, node) in model.nodes"
     ng-attr-id="{{node.id}}"
     ng-attr-x="{{node.x}}"
     ng-attr-y="{{node.y}}"
-    ng-mousedown="vm.nodeMouseDown($event, node)"
-    ng-mousemove="vm.nodeMouseMove($event, node)"
-    ng-mouseup="vm.nodeMouseUp($event, node)"
     ng-init="hovering=false"
-    draggable="vm.nodeDragOptions"
+    draggable="{left: 0, top: 0, bottom: editorHeight(), right: editorWidth - nodeWidth() - 20}"
   >
+
+    <text x="0" y="100" class="node-name"
+    >
+
+    </text>
 
     <rect
       ry="8"
       rx="8"
-      ng-attr-width="{{vm.width(node)}}"
-      ng-attr-height="{{vm.nodeHeight}}"
+      ng-attr-width="{{nodeWidth(node)}}"
+      ng-attr-height="{{nodeHeight}}"
       fill="#cccccc"
-      ng-class="vm.isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
+      ng-class="isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
       ng-mouseenter="hovering=true"
       ng-mouseleave="hovering=false"
     >
     </rect>
 
     <text
-      ng-attr-x="{{vm.width(node)/2}}"
-      ng-attr-y="{{vm.nodeHeight/2}}"
+      ng-attr-x="{{nodeWidth(node)/2}}"
+      ng-attr-y="{{nodeHeight/2}}"
       text-anchor="middle"
       alignment-baseline="middle"
       class="node-name"
@@ -48,21 +51,21 @@
     <g
       id="delete-button"
       ng-if="hovering && node.interface.name != 'input dataset'"
-      ng-click="vm.deleteNode(node.id)"
+      ng-click="deleteNode(node.id)"
     >
       <circle
-        ng-attr-cx="{{node.x + vm.width(node) - 6}}"
+        ng-attr-cx="{{node.x + nodeWidth(node) - 6}}"
         ng-attr-cy="{{node.y + 6}}"
         r="12"
         fill="black"
         stroke="white"
         stroke-width="4"
-        ng-class="vm.isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
+        ng-class="isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
       >
       </circle>
       <text
         ng-attr-y="{{node.y + 6}}"
-        ng-attr-x="{{node.x + vm.width(node) - 6}}"
+        ng-attr-x="{{node.x + nodeWidth(node) - 6}}"
         fill="white"
         text-anchor="middle"
         alignment-baseline="middle"
@@ -92,7 +95,7 @@
         r="4"
         ng-attr-cx="{{28 + ($index*14)}}"
         cy="0"
-        ng-class="vm.isNodeSelected(id) ? 'selected-connector-circle' : 'connector-circle'"
+        ng-class="isNodeSelected(id) ? 'selected-connector-circle' : 'connector-circle'"
         ng-mouseenter="showText=true"
         ng-mouseleave="showText=false"
       />
@@ -105,7 +108,7 @@
       <text
         ng-if="showText"
         ng-attr-x="{{28 + ($index*14)}}"
-        ng-attr-y="{{node.x + (vm.nodeHeight-10)}}"
+        ng-attr-y="{{node.x + (nodeHeight-10)}}"
         text-anchor="middle"
         alignment-baseline="middle"
         class="connector-name"
@@ -116,8 +119,8 @@
       <circle
         r="4"
         ng-attr-cx="{{28 + ($index*14)}}"
-        ng-attr-cy="{{vm.nodeHeight}}"
-        ng-class="vm.isNodeSelected(id) ? 'selected-connector-circle' : 'connector-circle'"
+        ng-attr-cy="{{nodeHeight}}"
+        ng-class="isNodeSelected(id) ? 'selected-connector-circle' : 'connector-circle'"
         ng-mouseenter="showText=true"
         ng-mouseleave="showText=false"
       />
@@ -130,7 +133,7 @@
     class="edge"
   >
     <path
-      ng-class="vm.isEdgeSelected(id) ? 'selected-edge' : 'edge'"
+      ng-class="isEdgeSelected(id) ? 'selected-edge' : 'edge'"
       ng-attr-d="M {{edge.sourceCoordX()}}, {{edge.sourceCoordY()}}
 C {{edge.sourceTangentX()}}, {{edge.sourceTangentY()}}
 {{edge.destTangentX()}}, {{edge.destTangentY()}}
@@ -138,7 +141,7 @@ C {{edge.sourceTangentX()}}, {{edge.sourceTangentY()}}
     >
     </path>
     <circle
-      ng-class="vm.isEdgeSelected(id) ? 'selected-edge-endpoint' : 'edge-endpoint'"
+      ng-class="isEdgeSelected(id) ? 'selected-edge-endpoint' : 'edge-endpoint'"
       r="4"
       ng-attr-cx="{{edge.sourceCoordX()}}"
       ng-attr-cy="{{edge.sourceCoordY()}}"
@@ -146,7 +149,7 @@ C {{edge.sourceTangentX()}}, {{edge.sourceTangentY()}}
     </circle>
 
     <circle
-      ng-class="vm.isEdgeSelected(id) ? 'selected-edge-endpoint' : 'edge-endpoint'"
+      ng-class="isEdgeSelected(id) ? 'selected-edge-endpoint' : 'edge-endpoint'"
       r="4"
       ng-attr-cx="{{edge.destCoordX()}}"
       ng-attr-cy="{{edge.destCoordY()}}"
