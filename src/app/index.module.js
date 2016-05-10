@@ -10,7 +10,8 @@
       'ngFileSaver',
       'LocalStorageModule',
       'ngAside',
-      'cfp.hotkeys'
+      'cfp.hotkeys',
+      'multipleSelection'
     ]);
 
 })();
