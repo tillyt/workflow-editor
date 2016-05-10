@@ -19,14 +19,6 @@
         editorWidth: '=',
         editorHeight: '='
       },
-      link: function (scope, elem, attrs) {
-
-
-        scope.$watch('model', function (value) {
-          // var currentDate = moment(attrs.calendarDay, "DD-MM-YYYY");
-          // element.text(currentDate.format('DD-MM-YYYY'));
-        }, true);
-      },
       controller: 'WorkflowController',
       controllerAs: 'vm',
       bindToController: true
