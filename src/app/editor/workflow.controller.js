@@ -11,7 +11,7 @@
 
 
 
-
+    vm.creatingConnection = false;
 
     vm.nodeSelected = null;
 

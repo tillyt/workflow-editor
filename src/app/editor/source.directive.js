@@ -17,7 +17,7 @@
 
         // Bind mousedown event
         elem.on('mousedown', function (e) {
-          e.preventDefault();
+          e.preventDefault(); 
           e.stopPropagation();
           elem.css({fill: 'black'});
           startX = e.clientX - x;
