@@ -5,7 +5,6 @@
   y="0"
   ng-attr-width="{{vm.editorWidth}}"
   ng-attr-height="{{vm.editorHeight}}"
-  multiple-selection-zone
 >
 
   <g
@@ -14,7 +13,6 @@
     ng-attr-transform="translate({{node.x}},{{node.y}})"
     ng-init="hovering=false"
     draggable="{right: vm.editorWidth - vm.nodeWidth(node) - 7}"
-    multiple-selection-item
   >
 
 
@@ -127,7 +125,6 @@
     ng-repeat="edge in vm.model.edges"
     class="edge"
     ng-attr-id="edge.id"
-    multiple-selection-item
   >
     <line
       ng-class="isEdgeSelected(id) ? 'selected-edge' : 'edge'"

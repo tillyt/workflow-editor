@@ -41,17 +41,3 @@ h1 {
   padding-left: 1em;
   padding-right: 1em;
 }
-
-.selected {
-  background-color: green !important;
-}
-.selecting {
-  background-color: yellow !important;
-}
-
-.select-helper {
-  position: absolute;
-  border: 1px dashed red;
-  background: red;
-  opacity: 0.2;
-}
