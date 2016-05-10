@@ -9,7 +9,8 @@
       'toastr',
       'ngFileSaver',
       'LocalStorageModule',
-      'ngAside'
+      'ngAside',
+      'cfp.hotkeys'
     ]);
 
 })();

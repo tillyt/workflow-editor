@@ -1,23 +1,20 @@
 <nav class="navbar navbar-fixed-top navbar-default container-fluid">
-  <div class="container-fluid">
-    <div class="nav navbar-nav">
-      <a href="http://nipy.org/nipype/" class="pull-left"><img height="50" src="assets/images/nipy.png"></a>
-      <span class="navbar-brand pull-left"> &nbsp; Nipype Workflow Editor </span>
-      <button ng-click="main.openAside()" class="pull-right btn btn-success btn-md" type="button">
-        Add Node
-      </button>
-      <li><a href="#" >
-        <i class="fa fa-upload" aria-hidden="true"></i>
-        Load
-      </a></li>
-      <li><a ng-click="vm.downloadJSON()">
-        <i class="fa fa-download" aria-hidden="true"></i>
-        Download
-      </a></li>
-    </div>
+  <div class="nav navbar-nav">
+    <a href="http://nipy.org/nipype/" class="pull-left"><img height="50" src="assets/images/nipy.png"></a>
+    <span class="navbar-brand pull-left"> &nbsp; Nipype Workflow Editor </span>
+    <button ng-click="main.openAside()" class="pull-right btn btn-success btn-md" type="button">
+      Add Node
+    </button>
+    <li><a href="#">
+      <i class="fa fa-upload" aria-hidden="true"></i>
+      Load
+    </a></li>
+    <li><a ng-click="vm.downloadJSON()">
+      <i class="fa fa-download" aria-hidden="true"></i>
+      Download
+    </a></li>
   </div>
 </nav>
-
 
 
 <workflow
