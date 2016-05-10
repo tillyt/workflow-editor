@@ -17,9 +17,7 @@
         nodeWidth: '&',
         nodeHeight: '=',
         editorWidth: '=',
-        editorHeight: '=',
-        deleteNode: '&',
-        selectedItems: '='
+        editorHeight: '='
       },
       link: function (scope, elem, attrs) {
 
@@ -28,7 +26,10 @@
           // var currentDate = moment(attrs.calendarDay, "DD-MM-YYYY");
           // element.text(currentDate.format('DD-MM-YYYY'));
         }, true);
-      }
+      },
+      controller: 'WorkflowController',
+      controllerAs: 'vm',
+      bindToController: true
 
 
     }

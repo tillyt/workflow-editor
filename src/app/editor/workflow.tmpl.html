@@ -3,24 +3,24 @@
   id="svg-container"
   x="0"
   y="0"
-  ng-attr-width="{{editorWidth}}"
-  ng-attr-height="{{editorHeight}}"
+  ng-attr-width="{{vm.editorWidth}}"
+  ng-attr-height="{{vm.editorHeight}}"
 >
 
   <g
-    ng-repeat="(id, node) in model.nodes"
+    ng-repeat="(id, node) in vm.model.nodes"
     ng-attr-id="{{node.id}}"
-    ng-attr-x="{{node.x}}"
-    ng-attr-y="{{node.y}}"
+    ng-attr-transform="translate({{node.x}},{{node.y}})"
     ng-init="hovering=false"
-    draggable="{right: editorWidth - nodeWidth({nodeobj:node}) - 7}"
+    draggable="{right: vm.editorWidth - vm.nodeWidth(node) - 7}"
   >
+
 
     <rect
       ry="8"
       rx="8"
-      ng-attr-width="{{nodeWidth({nodeobj:node}) || 150}}"
-      ng-attr-height="{{nodeHeight}}"
+      ng-attr-width="{{vm.nodeWidth(node) || 150}}"
+      ng-attr-height="{{vm.nodeHeight}}"
       fill="#cccccc"
       ng-class="isNodeSelected(id) ? 'selected-node-rect' : 'node-rect'"
       ng-mouseenter="hovering=true"
@@ -29,8 +29,8 @@
     </rect>
 
     <text
-      ng-attr-x="{{nodeWidth({nodeobj:node})/2}}"
-      ng-attr-y="{{nodeHeight/2}}"
+      ng-attr-x="{{vm.nodeWidth(node)/2}}"
+      ng-attr-y="{{vm.nodeHeight/2}}"
       text-anchor="middle"
       alignment-baseline="middle"
       class="node-name"
@@ -42,10 +42,10 @@
     <g
       id="delete-button"
       ng-if="hovering && node.interface.name != 'input dataset'"
-      ng-click="deleteNode(node.id)"
+      ng-click="vm.deleteNode(node.id)"
     >
       <circle
-        ng-attr-cx="{{node.x + nodeWidth({nodeobj:node}) - 6}}"
+        ng-attr-cx="{{node.x + vm.nodeWidth(node) - 6}}"
         ng-attr-cy="{{node.y + 6}}"
         r="12"
         fill="black"
@@ -56,7 +56,7 @@
       </circle>
       <text
         ng-attr-y="{{node.y + 6}}"
-        ng-attr-x="{{node.x + nodeWidth({nodeobj:node}) - 6}}"
+        ng-attr-x="{{node.x + vm.nodeWidth(node) - 6}}"
         fill="white"
         text-anchor="middle"
         alignment-baseline="middle"
@@ -89,7 +89,7 @@
         ng-class="isNodeSelected(id) ? 'selected-connector-circle' : 'connector-circle'"
         ng-mouseenter="showText=true"
         ng-mouseleave="showText=false"
-        destination
+        destination="vm.creatingConnection"
       />
     </g>
 
@@ -100,7 +100,7 @@
       <text
         ng-if="showText"
         ng-attr-x="{{28 + ($index*14)}}"
-        ng-attr-y="{{node.x + (nodeHeight-10)}}"
+        ng-attr-y="{{node.x + (vm.nodeHeight-10)}}"
         text-anchor="middle"
         alignment-baseline="middle"
         class="connector-name"
@@ -111,7 +111,7 @@
       <circle
         r="4"
         ng-attr-cx="{{28 + ($index*14)}}"
-        ng-attr-cy="{{nodeHeight}}"
+        ng-attr-cy="{{vm.nodeHeight}}"
         ng-class="isNodeSelected(id) ? 'selected-connector-circle' : 'connector-circle'"
         ng-mouseenter="showText=true"
         ng-mouseleave="showText=false"
@@ -122,7 +122,7 @@
 
 
   <g
-    ng-repeat="edge in model.edges"
+    ng-repeat="edge in vm.model.edges"
     class="edge"
     ng-attr-id="edge.id"
   >
