@@ -11,7 +11,7 @@
         scope: {
           container: '=draggable'
         },
-        link: function (scope, elem, attr) {
+        link: function (scope, elem, attrs) {
           var startX, startY, x = 0, y = 0;
           var container = scope.container;
 
@@ -54,11 +54,13 @@
             elem.css({
               transform: 'translate(' + x + 'px,' + y + 'px)'
             });
-            attr.x = x;
-            attr.y = y;
+
+            attrs.x = x;
+            attrs.y = y;
+
             // scope.$apply(function(){
-            //   scope.$eval(attr.x + '=' + x);
-            //   scope.$eval(attr.y + '=' + y);
+            //   scope.$eval(attrs.x + '=' + x);
+            //   scope.$eval(attrs.y + '=' + y);
             // });
           }
         }
@@ -66,15 +68,11 @@
       }
 
     }
-  }
-)();
-
-
-
+  })();
 
 
 //
-// link: function (scope, elem, attr) {
+// link: function (scope, elem, attrs) {
 //    (elem);
 //   var startX, startY, x = 0, y = 0;
 //   var container;
@@ -127,15 +125,15 @@
 //         y = container.bottom;
 //       }
 //     }
-//     mainCtrl.changeNodePosition(attr.id, x, y);
+//     mainCtrl.changeNodePosition(attrs.id, x, y);
 //     elem.css({
 //       transform: 'translate(' + x + 'px,' + y + 'px)',
 //     });
-//     attr.x = x;
-//     attr.y = y;
+//     attrs.x = x;
+//     attrs.y = y;
 //     // scope.$apply(function(){
-//     //   scope.$eval(attr.x + '=' + x);
-//     //   scope.$eval(attr.y + '=' + y);
+//     //   scope.$eval(attrs.x + '=' + x);
+//     //   scope.$eval(attrs.y + '=' + y);
 //     // });
 //   }
 
