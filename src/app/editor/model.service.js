@@ -46,13 +46,15 @@
         model.nodes[nodeID].x = newX;
         model.nodes[nodeID].y = newY;
       },
-      addNewEdge: function (out_node, outlet, in_node, inlet) {
+      addNewEdge: function (out_node, outlet, in_node, inlet, startPoint, endPoint) {
         model.edges[next_edge_id] = {
           id: next_edge_id,
           out_node: out_node,
           outlet: outlet,
           in_node: in_node,
-          inlet: inlet
+          inlet: inlet,
+          startPoint: startPoint,
+          endPoint: endPoint
         };
         next_edge_id++;
       }

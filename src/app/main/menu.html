@@ -8,7 +8,7 @@
 
     <form role="search">
       <div class="form-group">
-        <input type="text" ng-model="selected" placeholder="Search for an Interface" uib-typeahead-min-length="3"
+        <input type="text" ng-model="selected" placeholder="Search for an Interface" uib-typeahead-min-length="0"
                uib-typeahead="interface for interface in menu.interface_fullnames | filter:$viewValue | limitTo:10"
                class="form-control" typeahead-on-select="menu.selectItem($item, $model, $label)">
       </div>

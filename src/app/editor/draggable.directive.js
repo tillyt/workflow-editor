@@ -18,6 +18,7 @@
           // Bind mousedown event
           elem.on('mousedown', function (e) {
             e.preventDefault();
+            e.stopPropagation();
             startX = e.clientX - x;
             startY = e.clientY - y;
             $document.on('mousemove', mousemove);
@@ -26,6 +27,7 @@
 
           // Handle drag event
           function mousemove(e) {
+            e.stopPropagation();
             y = e.clientY - startY;
             x = e.clientX - startX;
             setPosition();

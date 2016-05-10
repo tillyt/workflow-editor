@@ -89,6 +89,7 @@
         ng-class="isNodeSelected(id) ? 'selected-connector-circle' : 'connector-circle'"
         ng-mouseenter="showText=true"
         ng-mouseleave="showText=false"
+        destination
       />
     </g>
 
@@ -114,67 +115,26 @@
         ng-class="isNodeSelected(id) ? 'selected-connector-circle' : 'connector-circle'"
         ng-mouseenter="showText=true"
         ng-mouseleave="showText=false"
+        source
       />
     </g>
   </g>
 
 
   <g
-    ng-repeat="edge in vm.model.edges"
+    ng-repeat="edge in model.edges"
     class="edge"
+    ng-attr-id="edge.id"
   >
-    <path
+    <line
       ng-class="isEdgeSelected(id) ? 'selected-edge' : 'edge'"
-      ng-attr-d="M {{edge.sourceCoordX()}}, {{edge.sourceCoordY()}}
-C {{edge.sourceTangentX()}}, {{edge.sourceTangentY()}}
-{{edge.destTangentX()}}, {{edge.destTangentY()}}
-{{edge.destCoordX()}}, {{edge.destCoordY()}}"
+      ng-attr-x1="{{edge.startPoint.x}}"
+      ng-attr-y1="{{edge.startPoint.y}}"
+      ng-attr-x2="{{edge.endPoint.x}}"
+      ng-attr-y2="{{edge.endPoint.y}}"
     >
-    </path>
-    <circle
-      ng-class="isEdgeSelected(id) ? 'selected-edge-endpoint' : 'edge-endpoint'"
-      r="4"
-      ng-attr-cx="{{edge.sourceCoordX()}}"
-      ng-attr-cy="{{edge.sourceCoordY()}}"
-    >
-    </circle>
+    </line>
 
-    <circle
-      ng-class="isEdgeSelected(id) ? 'selected-edge-endpoint' : 'edge-endpoint'"
-      r="4"
-      ng-attr-cx="{{edge.destCoordX()}}"
-      ng-attr-cy="{{edge.destCoordY()}}"
-    >
-    </circle>
-  </g>
-
-  <g
-    ng-if="vm.currentlyDrawingEdge"
-  >
-    <path
-      class="dragging-edge dragging-edge-line"
-      ng-attr-d="M {{vm.dragPoint1.x}}, {{vm.dragPoint1.y}}
-C {{vm.dragTangent1.x}}, {{vm.dragTangent1.y}}
-{{vm.dragTangent2.x}}, {{vm.dragTangent2.y}}
-{{vm.dragPoint2.x}}, {{vm.dragPoint2.y}}"
-    >
-    </path>
-
-    <circle
-      class="dragging-edge dragging-edge-endpoint"
-      r="4"
-      ng-attr-cx="{{dragPoint1.x}}"
-      ng-attr-cy="{{dragPoint1.y}}"
-    >
-    </circle>
-
-    <circle
-      class="dragging-edge dragging-edge-endpoint"
-      r="4"
-      ng-attr-cx="{{dragPoint2.x}}"
-      ng-attr-cy="{{dragPoint2.y}}"
-    >
-    </circle>
   </g>
 
 

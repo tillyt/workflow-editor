@@ -71,7 +71,9 @@
             };
             menu.selectItem = function (interface_full_name, model, interface_name) {
               $uibModalInstance.dismiss();
-              main.showToastr('Adding ' + interface_name + ' to workflow');
+              var splitName = interface_name.split('.');
+              var displayName = splitName[splitName.length - 1];
+              main.showToastr('Adding ' + displayName + ' to workflow');
               main.addNewNode(menu.interfaces[interface_full_name]);
               main.menuOpen = false;
             };
