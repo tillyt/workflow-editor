@@ -24,7 +24,7 @@
   <span class="icon-bar"></span>
   <span class="icon-bar"></span>
 </button>
-<div sidebar="main.showRightSidebar" click-outside="showRightSidebar = false" class="col-xs-7 col-sm-3 col-md-3 sidebar-right sidebar-animate">
+<div sidebar="main.showRightSidebar" click-outside="showRightSidebar = false" class="col-xs-7 col-sm-2 col-md-2 sidebar-right sidebar-animate">
   <ul class="nav navbar-stacked" ng-repeat="category in main.categories">
     <li><a ng-click="menu.selectCategory">{{category | uppercase}}</a></li>
   </ul>
@@ -44,14 +44,18 @@
 
 
 
+<div class="col-md-10">
+
+  <workflow
+    model="main.model"
+    default-node-width="150"
+    node-height="70"
+    editor-width="main.editorWidth"
+    editor-height="main.editorHeight"
+  >
+
+  </workflow>
 
 
-<workflow
-  model="main.model"
-  default-node-width="150"
-  node-height="70"
-  editor-width="main.editorWidth"
-  editor-height="main.editorHeight"
->
 
-</workflow>
+</div>
