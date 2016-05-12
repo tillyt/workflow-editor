@@ -7,18 +7,18 @@
 
     <div class="{{'workflow-input'}}">
       <div fc-magnet
-           ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'input')">
+           ng-repeat="input in modelservice.nodes.inputs">
         <div fc-connector></div>
       </div>
     </div>
     <div class="{{'workflow-output'}}">
       <div fc-magnet
-           ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'output')">
+           ng-repeat="output in modelservice.nodes.outputs">
         <div fc-connector></div>
       </div>
     </div>
   </div>
   <div class="fc-nodedelete" ng-click="modelservice.nodes.delete(node)">
-    &times;
+    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
   </div>
 </div>

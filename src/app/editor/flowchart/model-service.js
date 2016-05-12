@@ -7,8 +7,11 @@
     var canvasHtmlElement = null;
 
     return function innerModelfactory(model, selectedObjects, edgeAddedCallback) {
-      // TODO fix model validation
+      // TODO fix model validation then uncomment calling this
       // Modelvalidation.validateModel(model);
+
+
+
       var modelservice = {
         selectedObjects: selectedObjects
       };
