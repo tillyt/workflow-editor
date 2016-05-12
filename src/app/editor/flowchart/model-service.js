@@ -89,16 +89,6 @@
       };
 
       modelservice.nodes = {
-        getConnectorsByType: function(node, type) {
-          if (type == 'input') {
-            return node.inputs;
-          } else if (type == 'output') {
-            return node.outputs;
-          } else {
-            console.log('fix getconnectorsbytype function')
-          }
-        },
-
         select: selectObject,
         deselect: deselectObject,
         toggleSelected: toggleSelectedObject,
@@ -106,12 +96,12 @@
 
         _addConnector: function(node, connector) {
           node.connectors.push(connector);
-          try {
-            Modelvalidation.validateNode(node);
-          } catch (error) {
-            node.connectors.splice(node.connectors.indexOf(connector), 1);
-            throw error;
-          }
+          // try {
+          //   Modelvalidation.validateNode(node);
+          // } catch (error) {
+          //   node.connectors.splice(node.connectors.indexOf(connector), 1);
+          //   throw error;
+          // }
         },
 
         delete: function(node) {
@@ -153,13 +143,14 @@
         },
 
         _addNode: function(node) {
-          try {
-            model.nodes.push(node);
-            Modelvalidation.validateNodes(model.nodes);
-          } catch(error) {
-            model.nodes.splice(model.nodes.indexOf(node), 1);
-            throw error;
-          }
+          model.nodes.push(node);
+
+          // try {
+          //   Modelvalidation.validateNodes(model.nodes);
+          // } catch(error) {
+          //   model.nodes.splice(model.nodes.indexOf(node), 1);
+          //   throw error;
+          // }
         },
 
         getConnectorIds: function(node) {
@@ -212,10 +203,10 @@
         },
 
         _addEdge: function(sourceConnector, destConnector) {
-          Modelvalidation.validateConnector(sourceConnector);
-          Modelvalidation.validateConnector(destConnector);
+          //Modelvalidation.validateConnector(sourceConnector);
+          //Modelvalidation.validateConnector(destConnector);
           var edge = {source: sourceConnector.id, destination: destConnector.id};
-          Modelvalidation.validateEdges(model.edges.concat([edge]), model.nodes);
+          //Modelvalidation.validateEdges(model.edges.concat([edge]), model.nodes);
           model.edges.push(edge);
           edgeAddedCallback(edge);
         }
