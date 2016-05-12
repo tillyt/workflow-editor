@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController(Blob, FileSaver, $aside, $timeout, nipypePackages, toastr, localStorageService, $window, hotkeys) {
+  function MainController(Modelfactory, Blob, FileSaver, $aside, $timeout, nipypePackages, toastr, localStorageService, $window, hotkeys) {
     var main = this;
 
     activate();
@@ -14,13 +14,13 @@
     function activate() {
       getNipypePackages();
       getModel();
+      main.modelservice = Modelfactory(main.model, main.flowchartselected);
       $timeout(function () {
         main.classAnimation = 'rubberBand';
       }, 4000);
     }
 
-    main.showRightSidebar=true;
-
+    main.showRightSidebar = true;
 
 
     function getNipypePackages() {
@@ -34,13 +34,109 @@
     }
 
     function getModel() {
-      console.log(localStorageService.get('model'));
-      if (localStorageService.get('model')){
-        return localStorageService.get('model');
+      if (localStorageService.get('model')) {
+        main.model = localStorageService.get('model');
       }
-      return main.model;
+
+      main.model = {
+        nodes: [],
+        edges: []
+      };
+
+      var input_dataset = {"inputs": {}, "outputs": {"dataset": null}, "name": "input dataset"};
+      input_dataset['id'] = 0;
+      input_dataset['x'] = 0;
+      input_dataset['y'] = 0;
+
+      main.model.nodes.push(input_dataset);
+
+
       localStorageService.set('model', main.model);
+      console.log('model', main.model);
+      return main.model;
     }
+
+
+
+    main.flowchartselected = [];
+
+
+
+
+    var next_node_id = 1;
+    var next_edge_id = 0;
+
+
+
+
+
+
+
+
+
+
+
+//TODO move these to model service
+
+    main.addNewNode = function (nipype_interface) {
+      var y = 150 * next_node_id;
+      var x = 50 * next_node_id;
+      nipype_interface['id'] = next_node_id;
+      nipype_interface['x'] = x;
+      nipype_interface['y'] = y;
+      main.model.nodes.push(nipype_interface);
+      next_node_id++;
+      localStorageService.set('model', main.model);
+    };
+
+    main.changeNodePosition = function (node_interface_name, newX, newY) {
+      // TODO
+      // main.model.nodes[nodeID].x = newX;
+      // main.model.nodes[nodeID].y = newY;
+    };
+
+    main.addNewEdge = function (out_node, outlet, in_node, inlet, startPoint, endPoint) {
+      main.model.edges.push({
+        id: next_edge_id,
+        out_node: out_node,
+        outlet: outlet,
+        in_node: in_node,
+        inlet: inlet,
+        startPoint: startPoint,
+        endPoint: endPoint
+      });
+      next_edge_id++;
+    };
+
+
+    main.activateWorkflow = function () {
+      angular.forEach(main.model.edges, function (edge) {
+        edge.active = !edge.active;
+      });
+    };
+
+
+    main.deleteSelected = function () {
+      main.modelservice.deleteSelected();
+    };
+
+    main.callbacks = {
+      edgeDoubleClick: function () {
+        console.log('Edge double clicked.');
+      },
+      edgeMouseOver: function () {
+        console.log('mouserover')
+      },
+      isValidEdge: function (source, destination) {
+        return source.type === 'output' && destination.type === 'input';
+      },
+      nodeCallbacks: {
+        'doubleClick': function (event) {
+          console.log('Node was doubleclicked.')
+        }
+      }
+    };
+
 
     main.isCollapsed = false;
 
@@ -78,20 +174,21 @@
               $uibModalInstance.dismiss();
               var splitName = interface_name.split('.');
               var displayName = splitName[splitName.length - 1];
-              main.showToastr('Adding ' + displayName + ' to workflow');
+              main.showToastr('Added ' + displayName + ' to workflow');
               main.addNewNode(menu.interfaces[interface_full_name]);
               main.menuOpen = false;
             };
 
           }
-        }).result.then(postClose, postClose);;
+        }).result.then(postClose, postClose);
+        ;
       }
     };
 
     hotkeys.add({
       combo: 'ctrl+n',
       description: 'Add New Node to Workflow',
-      callback: function(){
+      callback: function () {
         main.openAside();
       }
     });
@@ -119,9 +216,6 @@
     };
 
 
-
-
-
     main.deleteSelected = function () {
       //TODO
       main.model.deleteSelected();
@@ -130,7 +224,7 @@
     hotkeys.add({
       combo: 'del',
       description: 'Delete Selected Nodes and Edges',
-      callback: function(){
+      callback: function () {
         main.deleteSelected();
       }
     });
@@ -138,7 +232,7 @@
     hotkeys.add({
       combo: 'ctrl+a',
       description: 'Select All Nodes and Edges',
-      callback: function(){
+      callback: function () {
         main.selectAll();
       }
     });
@@ -154,66 +248,6 @@
 
 
     main.selectedItems = [];
-
-
-
-    // nodes currently on canvas, {id: node}
-    // format of each node: {id: id_number, interface: interface, x: x, y: y}
-    // where id is a number and the node_object properties are interface, x position, and y position
-    var current_nodes = {};
-
-    var input_dataset = {"inputs": {}, "outputs": {"dataset": null}, "name": "input dataset"};
-    current_nodes[0] = {id: 0, x: 0, y: 0, interface: input_dataset};
-
-    var next_node_id = 1;
-
-    // list of edges currently on canvas
-    // format of each edge: {id: id_number, out_node: out_node, outlet: outlet, in_node: in_node, inlet: inlet}
-    var current_edges = {};
-
-    var next_edge_id = 0;
-
-
-    main.model = {
-      nodes: current_nodes,
-      edges: current_edges
-    };
-
-    main.addNewNode = function (nipype_interface) {
-      var y = 150* next_node_id;
-      var x = 50 * next_node_id;
-      console.log(y);
-      main.model.nodes[next_node_id] = {
-        id: next_node_id,
-        x: x,
-        y: y,
-        interface: nipype_interface
-      };
-      next_node_id++;
-      localStorageService.set('model', main.model);
-    };
-
-    main.changeNodePosition = function (nodeID, newX, newY) {
-      main.model.nodes[nodeID].x = newX;
-      main.model.nodes[nodeID].y = newY;
-    };
-
-    main.addNewEdge = function (out_node, outlet, in_node, inlet, startPoint, endPoint) {
-      main.model.edges[next_edge_id] = {
-        id: next_edge_id,
-        out_node: out_node,
-        outlet: outlet,
-        in_node: in_node,
-        inlet: inlet,
-        startPoint: startPoint,
-        endPoint: endPoint
-      };
-      next_edge_id++;
-    };
-
-
-
-
 
 
   }

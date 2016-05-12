@@ -90,9 +90,13 @@
 
       modelservice.nodes = {
         getConnectorsByType: function(node, type) {
-          return node.connectors.filter(function(connector) {
-            return connector.type === type
-          });
+          if (type == 'input') {
+            return node.inputs;
+          } else if (type == 'output') {
+            return node.outputs;
+          } else {
+            console.log('fix getconnectorsbytype function')
+          }
         },
 
         select: selectObject,

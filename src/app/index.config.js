@@ -15,7 +15,7 @@
     toastrConfig.timeOut = 3000;
     toastrConfig.positionClass = 'toast-bottom-left';
     toastrConfig.preventDuplicates = true;
-    toastrConfig.progressBar = true;
+    toastrConfig.progressBar = false;
 
 
   }
