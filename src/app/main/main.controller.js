@@ -19,6 +19,8 @@
       }, 4000);
     }
 
+    main.showRightSidebar=true;
+
 
 
     function getNipypePackages() {
