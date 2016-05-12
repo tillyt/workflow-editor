@@ -2,19 +2,19 @@
 
   'use strict';
 
-  function fcMagnet() {
+  function magnet() {
     return {
       restrict: 'AE',
       link: function(scope, element) {
         element.addClass('workflow-magnet');
 
-        element.on('dragover', scope.fcCallbacks.edgeDragoverMagnet(scope.connector));
-        element.on('drop', scope.fcCallbacks.edgeDrop(scope.connector));
-        element.on('dragend', scope.fcCallbacks.edgeDragend);
+        element.on('dragover', scope.callbacks.edgeDragoverMagnet(scope.connector));
+        element.on('drop', scope.callbacks.edgeDrop(scope.connector));
+        element.on('dragend', scope.callbacks.edgeDragend);
       }
     }
   }
 
   angular.module('workflowEditor')
-    .directive('fcMagnet', fcMagnet);
+    .directive('magnet', magnet);
 }());

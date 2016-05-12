@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function fcCanvas() {
+  function workflowCanvas() {
     return {
       restrict: 'E',
       templateUrl: "/app/editor/flowchart/canvas.html",
@@ -11,45 +11,47 @@
         model: "=",
         selectedObjects: "=",
         edgeStyle: '@',
-        userCallbacks: '=?callbacks',
+        nodeCallbacks: '=?callbacks',
         automaticResize: '=?',
         nodeWidth: '=?',
         nodeHeight: '=?'
       },
       controller: 'canvasController',
+      controllerAs: 'vm',
+      bindToController: true,
       link: function(scope, element) {
         function adjustCanvasSize() {
-          if (scope.model) {
+          if (scope.vm.model) {
             var maxX = 0;
             var maxY = 0;
-            angular.forEach(scope.model.nodes, function (node, key) {
-              maxX = Math.max(node.x + scope.nodeWidth, maxX);
-              maxY = Math.max(node.y + scope.nodeHeight, maxY);
+            angular.forEach(scope.vm.model.nodes, function (node, key) {
+              maxX = Math.max(node.x + scope.vm.nodeWidth, maxX);
+              maxY = Math.max(node.y + scope.vm.nodeHeight, maxY);
             });
             element.css('width', Math.max(maxX, element.prop('offsetWidth')) + 'px');
             element.css('height', Math.max(maxY, element.prop('offsetHeight')) + 'px');
           }
         }
-        if (scope.edgeStyle !== 'curved' && scope.edgeStyle !== 'line') {
+        if (scope.vm.edgeStyle !== 'curve' && scope.vm.edgeStyle !== 'line') {
           throw new Error('edgeStyle not supported.');
         }
-        scope.nodeHeight = scope.nodeHeight || 200;
-        scope.nodeWidth = scope.nodeWidth || 200;
+        scope.vm.nodeHeight = scope.vm.nodeHeight || 200;
+        scope.vm.nodeWidth = scope.vm.nodeWidth || 200;
 
         element.addClass('workflow-canvas');
-        element.on('dragover', scope.dragover);
-        element.on('drop', scope.drop);
+        element.on('dragover', scope.vm.dragover);
+        element.on('drop', scope.vm.drop);
 
         scope.$watch('model', adjustCanvasSize);
 
-        scope.modelservice.setCanvasHtmlElement(element[0]);
+        scope.vm.modelservice.setCanvasHtmlElement(element[0]);
       }
     };
   }
 
   angular
     .module('workflowEditor')
-    .directive('fcCanvas', fcCanvas);
+    .directive('workflowCanvas', workflowCanvas);
 
 }());
 

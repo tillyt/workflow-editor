@@ -6,19 +6,19 @@
     <p>{{ node.name }}</p>
 
     <div class="{{flowchartConstants.topConnectorClass}}">
-      <div fc-magnet
+      <div magnet
            ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, flowchartConstants.topConnectorType)">
-        <div fc-connector></div>
+        <div connector></div>
       </div>
     </div>
     <div class="{{flowchartConstants.bottomConnectorClass}}">
-      <div fc-magnet
+      <div magnet
            ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, flowchartConstants.bottomConnectorType)">
-        <div fc-connector></div>
+        <div connector></div>
       </div>
     </div>
   </div>
-  <div class="fc-nodedelete" ng-click="modelservice.nodes.delete(node)">
+  <div class="nodedelete" ng-click="modelservice.nodes.delete(node)">
     &times;
   </div>
 </div>

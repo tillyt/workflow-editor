@@ -1,24 +1,25 @@
 <div
-  id="{{node.id}}"
-  ng-attr-style="position: absolute; top: {{ node.y }}px; left: {{ node.x }}px;"
-  ng-dblclick="callbacks.doubleClick($event)">
-  <div class="innerNode">
-    <p>{{ node.name }}</p>
+    id="{{node.id}}"
+    ng-attr-style="position: absolute; top: {{ node.y }}px; left: {{ node.x }}px;"
+    ng-dblclick="callbacks.doubleClick($event)">
 
-    <div class="{{'workflow-input'}}">
-      <div fc-magnet
-           ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'input')"></div>
-        <div fc-connector></div>
+    <div class="innerNode">
+      <p>{{ node.name }}</p>
+{{modelservice.nodes.getConnectorsByType(node, 'output')}}
+      <div class="{{'workflow-input'}}">
+        <div magnet
+             ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'input')"></div>
+        <div connector></div>
       </div>
-    </div>
+
+
     <div class="{{'workflow-output'}}">
-      <div fc-magnet
+      <div magnet
            ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'output')"></div>
-        <div fc-connector></div>
-      </div>
+      <div connector></div>
     </div>
+
   </div>
-  <div class="fc-nodedelete" ng-click="modelservice.nodes.delete(node)">
-    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-  </div>
+<div class="nodedelete" ng-click="modelservice.nodes.delete(node)">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 </div>

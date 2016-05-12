@@ -2,14 +2,14 @@
 
   'use strict';
 
-  function fcNode() {
+  function node() {
     return {
       restrict: 'E',
       templateUrl: '/app/editor/flowchart/node.html',
-      replace: false,
+      replace: true,
       scope: {
-        fcCallbacks: '=callbacks',
-        callbacks: '=userNodeCallbacks',
+        callbacks: '=callbacks',
+        nodeCallbacks: '=userNodeCallbacks',
         node: '=',
         selected: '=',
         underMouse: '=',
@@ -20,11 +20,11 @@
       link: function(scope, element) {
         element.attr('draggable', 'true');
 
-        element.on('dragstart', scope.fcCallbacks.nodeDragstart(scope.node));
-        element.on('dragend', scope.fcCallbacks.nodeDragend);
-        element.on('click', scope.fcCallbacks.nodeClicked(scope.node));
-        element.on('mouseover', scope.fcCallbacks.nodeMouseOver(scope.node));
-        element.on('mouseout', scope.fcCallbacks.nodeMouseOut(scope.node));
+        element.on('dragstart', scope.callbacks.nodeDragstart(scope.node));
+        element.on('dragend', scope.callbacks.nodeDragend);
+        element.on('click', scope.callbacks.nodeClicked(scope.node));
+        element.on('mouseover', scope.callbacks.nodeMouseOver(scope.node));
+        element.on('mouseout', scope.callbacks.nodeMouseOut(scope.node));
 
         element.addClass('workflow-node');
 
@@ -49,5 +49,5 @@
     };
   }
 
-  angular.module('workflowEditor').directive('fcNode', fcNode);
+  angular.module('workflowEditor').directive('node', node);
 }());

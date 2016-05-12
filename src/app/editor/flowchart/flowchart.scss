@@ -1,22 +1,22 @@
-.fc-canvas {
+.workflow-canvas {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-.fc-canvas svg {
+.workflow-canvas svg {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-.fc-canvas {
+.workflow-canvas {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-.fc-canvas svg {
+.workflow-canvas svg {
   position: relative;
   width: 100%;
   height: 100%;
@@ -197,13 +197,13 @@
 
 
 
-.fc-canvas {
+.workflow-canvas {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-.fc-canvas svg {
+.workflow-canvas svg {
   position: relative;
   width: 100%;
   height: 100%;
@@ -211,7 +211,7 @@
 
 
 
-.fc-node {
+.node {
   z-index: 1;
 }
 
@@ -227,23 +227,23 @@
   font-size: 11px;
 }
 
-.fc-node.fc-hover {
+.node.fc-hover {
   -webkit-filter: brightness(70%);
   filter: brightness(70%);;
   cursor: move;
 }
 
-.fc-node.fc-selected {
+.node.fc-selected {
   -webkit-filter: brightness(70%);
   filter: brightness(70%);
 }
 
-.fc-node.fc-dragging {
+.node.fc-dragging {
   z-index: 10;
   cursor: move;
 }
 
-.fc-node p {
+.node p {
   padding-top: 25px;
   padding-bottom: 20px;
   text-align: center;
@@ -268,7 +268,7 @@
   bottom: -40px;
 }
 
-.fc-magnet {
+.magnet {
   display: flex;
   flex-grow: 1;
   height: 60px;
@@ -276,15 +276,15 @@
   justify-content: center;
 }
 
-.fc-input .fc-magnet {
+.fc-input .magnet {
   align-items: flex-end;
 }
 
-.fc-output .fc-magnet {
+.fc-output .magnet {
   align-items: flex-start;
 }
 
-.fc-connector {
+.connector {
   width: 18px;
   height: 18px;
 
@@ -297,7 +297,7 @@
   color: #fff;
 }
 
-.fc-connector.fc-hover {
+.connector.fc-hover {
   background-color: #000;
 }
 
@@ -338,11 +338,11 @@
   fill: gray;
 }
 
-.fc-nodedelete {
+.nodedelete {
   display: none;
 }
 
-.fc-selected .fc-nodedelete {
+.fc-selected .nodedelete {
   display: block;
   position: absolute;
   right: -13px;

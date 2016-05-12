@@ -94,7 +94,7 @@
           angular.forEach(node['outputs'], function (val, key) {
             connectors.push({
               type: 'output',
-              id: Math.random(),
+              id: 1,
               name: key,
               value: val
             });
@@ -102,7 +102,7 @@
           angular.forEach(node['inputs'], function (val, key) {
             connectors.push({
               type: 'input',
-              id: Math.random(),
+              id: 1,
               name: key,
               value: val
             });
