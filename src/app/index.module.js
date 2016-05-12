@@ -10,8 +10,7 @@
       'ngFileSaver',
       'LocalStorageModule',
       'ngAside',
-      'cfp.hotkeys',
-      'flowchart'
+      'cfp.hotkeys'
     ]);
 
 })();
