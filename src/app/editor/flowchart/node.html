@@ -7,13 +7,13 @@
 
     <div class="{{'workflow-input'}}">
       <div fc-magnet
-           ng-repeat="output in modelservice.nodes.getInputs(node)"></div>
+           ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'input')"></div>
         <div fc-connector></div>
       </div>
     </div>
     <div class="{{'workflow-output'}}">
       <div fc-magnet
-           ng-repeat="output in modelservice.nodes.getOutputs(node)"></div>
+           ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'output')"></div>
         <div fc-connector></div>
       </div>
     </div>

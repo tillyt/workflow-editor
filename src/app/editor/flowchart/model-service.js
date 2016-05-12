@@ -89,14 +89,32 @@
       };
 
       modelservice.nodes = {
-        getInputs: function (node) {
-          return Object.keys(node['inputs']);
+        getConnectorsByType: function(node, type){
+          var connectors = [];
+          angular.forEach(node['outputs'], function (val, key) {
+            connectors.push({
+              type: 'output',
+              id: Math.random(),
+              name: key,
+              value: val
+            });
+          });
+          angular.forEach(node['inputs'], function (val, key) {
+            connectors.push({
+              type: 'input',
+              id: Math.random(),
+              name: key,
+              value: val
+            });
+          });
+          return connectors.filter(function(connector) {
+              return connector.type === type
+          });
+
+
+
         },
 
-        getOutputs: function (node) {
-          console.log(node['outputs'])
-          return Object.keys(node['outputs']);
-        },
 
 
         select: selectObject,
