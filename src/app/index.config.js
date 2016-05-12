@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, toastrConfig) {
+  function config($logProvider, toastrConfig, NodeTemplatePathProvider) {
     // Enable log
     $logProvider.debugEnabled(true);
 
@@ -16,8 +16,9 @@
     toastrConfig.positionClass = 'toast-bottom-left';
     toastrConfig.preventDuplicates = true;
     toastrConfig.progressBar = true;
+
+    NodeTemplatePathProvider.setTemplatePath("path/to/your/template/node.html");
+
   }
 
 })();
-
-// ng-attr-transform="translate({{node.x}}, {{node.y}})"
