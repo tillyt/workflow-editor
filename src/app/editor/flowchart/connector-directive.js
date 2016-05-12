@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function fcConnector(flowchartConstants) {
+  function fcConnector() {
     return {
       restrict: 'A',
       link: function(scope, element) {
@@ -15,12 +15,12 @@
         element.on('mouseenter', scope.fcCallbacks.connectorMouseEnter(scope.connector));
         element.on('mouseleave', scope.fcCallbacks.connectorMouseLeave(scope.connector));
 
-        element.addClass(flowchartConstants.connectorClass);
+        element.addClass('workflow-connector');
         scope.$watch('mouseOverConnector', function(value) {
           if (value === scope.connector) {
-            element.addClass(flowchartConstants.hoverClass);
+            element.addClass('workflow-hover');
           } else {
-            element.removeClass(flowchartConstants.hoverClass);
+            element.removeClass('workflow-hover');
           }
         });
 

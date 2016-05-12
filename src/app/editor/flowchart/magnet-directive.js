@@ -2,11 +2,11 @@
 
   'use strict';
 
-  function fcMagnet(flowchartConstants) {
+  function fcMagnet() {
     return {
       restrict: 'AE',
       link: function(scope, element) {
-        element.addClass(flowchartConstants.magnetClass);
+        element.addClass('workflow-magnet');
 
         element.on('dragover', scope.fcCallbacks.edgeDragoverMagnet(scope.connector));
         element.on('drop', scope.fcCallbacks.edgeDrop(scope.connector));

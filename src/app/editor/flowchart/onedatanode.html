@@ -3,12 +3,12 @@
   ng-attr-style="position: absolute; top: {{ node.y }}px; left: {{ node.x }}px; background: {{ node.color }}; border-color: {{node.borderColor}}">
   <p>{{ node.name }}</p>
 
-  <div class="{{flowchartConstants.topConnectorClass}}">
+  <div class="{{'workflow-input'}}">
     <div fc-connector
-         ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, flowchartConstants.topConnectorType)"></div>
+         ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'input')"></div>
   </div>
-  <div class="{{flowchartConstants.bottomConnectorClass}}">
+  <div class="{{'workflow-output'}}">
     <div fc-connector
-         ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, flowchartConstants.bottomConnectorType)"></div>
+         ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'output')"></div>
   </div>
 </div>

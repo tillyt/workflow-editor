@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function Edgedrawingservice(flowchartConstants) {
+  function Edgedrawingservice() {
     function computeEdgeTangentOffset(pt1, pt2) {
         return (pt2.y - pt1.y) / 2;
     }
@@ -23,7 +23,7 @@
 
     this.getEdgeDAttribute = function(pt1, pt2, style) {
       var dAddribute = 'M ' + pt1.x + ', ' + pt1.y + ' ';
-      if (style === flowchartConstants.curvedStyle) {
+      if (style === 'curved') {
         var sourceTangent = computeEdgeSourceTangent(pt1, pt2);
         var destinationTangent = computeEdgeDestinationTangent(pt1, pt2);
         dAddribute += 'C ' + sourceTangent.x + ', ' + sourceTangent.y + ' ' + destinationTangent.x + ', ' + destinationTangent.y + ' ' + pt2.x + ', ' + pt2.y;

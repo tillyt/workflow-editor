@@ -3,7 +3,7 @@
 
   'use strict';
 
-  function Modelvalidation(Topsortservice, flowchartConstants) {
+  function Modelvalidation(Topsortservice) {
 
     function ModelvalidationError(message) {
       this.message = message;
@@ -26,7 +26,7 @@
       angular.forEach(nodes, function(node) {
         that.validateNode(node);
         if (ids.indexOf(node.id) !== -1) {
-          throw new ModelvalidationError('Id not unique.');
+          throw new ModelvalidationError('ID not unique.');
         }
         ids.push(node.id);
       });
@@ -35,7 +35,7 @@
       angular.forEach(nodes, function(node) {
         angular.forEach(node.connectors, function(connector) {
           if (connectorIds.indexOf(connector.id) !== -1) {
-            throw new ModelvalidationError('Id not unique.');
+            throw new ModelvalidationError('ID not unique.');
           }
           connectorIds.push(connector.id);
         });

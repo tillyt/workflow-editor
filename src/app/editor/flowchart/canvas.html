@@ -7,11 +7,11 @@
         ng-mouseover="edgeMouseOver($event, edge)"
         ng-mouseenter="edgeMouseEnter($event, edge)"
         ng-mouseleave="edgeMouseLeave($event, edge)"
-        ng-attr-class="{{(modelservice.edges.isSelected(edge) && flowchartConstants.selectedClass + ' ' + flowchartConstants.edgeClass) || edge == mouseOver.edge && flowchartConstants.hoverClass + ' ' + flowchartConstants.edgeClass || edge.active && flowchartConstants.activeClass + ' ' + flowchartConstants.edgeClass || flowchartConstants.edgeClass}}"
+        ng-attr-class="{{(modelservice.edges.isSelected(edge) && 'workflow-selected + ' ' + 'workflow-edge') || edge == mouseOver.edge && 'workflow-hover' + ' ' + 'workflow-edge' || edge.active && 'workflow-active' + ' ' + 'workflow-edge' || 'workflow-edge'}}"
         ng-attr-d="{{getEdgeDAttribute(modelservice.edges.sourceCoord(edge), modelservice.edges.destCoord(edge), edgeStyle)}}"></path>
     </g>
     <g ng-if="edgeDragging.isDragging">
-      <path class="{{ flowchartConstants.edgeClass }} {{ flowchartConstants.draggingClass }}"
+      <path class="{{ 'workflow-edge' }} {{ 'workflow-dragging' }}"
             ng-attr-d="{{getEdgeDAttribute(edgeDragging.dragPoint1, edgeDragging.dragPoint2, edgeStyle)}}"></path>
       <circle class="edge-endpoint" r="4" ng-attr-cx="{{edgeDragging.dragPoint2.x}}"
               ng-attr-cy="{{edgeDragging.dragPoint2.y}}"></circle>

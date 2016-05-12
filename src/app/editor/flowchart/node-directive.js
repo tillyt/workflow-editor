@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function fcNode(flowchartConstants) {
+  function fcNode() {
     return {
       restrict: 'E',
       templateUrl: '/app/editor/flowchart/node.html',
@@ -18,7 +18,6 @@
         draggedNode: '='
       },
       link: function(scope, element) {
-        scope.flowchartConstants = flowchartConstants;
         element.attr('draggable', 'true');
 
         element.on('dragstart', scope.fcCallbacks.nodeDragstart(scope.node));
@@ -27,7 +26,7 @@
         element.on('mouseover', scope.fcCallbacks.nodeMouseOver(scope.node));
         element.on('mouseout', scope.fcCallbacks.nodeMouseOut(scope.node));
 
-        element.addClass(flowchartConstants.nodeClass);
+        element.addClass('workflow-node');
 
         function myToggleClass(clazz, set) {
           if (set) {
@@ -38,13 +37,13 @@
         }
 
         scope.$watch('selected', function(value) {
-          myToggleClass(flowchartConstants.selectedClass, value);
+          myToggleClass('workflow-selected', value);
         });
         scope.$watch('underMouse', function(value) {
-          myToggleClass(flowchartConstants.hoverClass, value);
+          myToggleClass('workflow-hover', value);
         });
         scope.$watch('draggedNode', function(value) {
-          myToggleClass(flowchartConstants.draggingClass, value===scope.node);
+          myToggleClass('workflow-dragging', value===scope.node);
         });
       }
     };

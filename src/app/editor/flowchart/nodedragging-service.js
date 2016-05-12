@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function Nodedraggingfactory(flowchartConstants) {
+  function Nodedraggingfactory() {
     return function(modelservice, nodeDraggingScope, applyFunction, automaticResize) {
 
       var dragOffset = {};
@@ -23,12 +23,14 @@
       }
       function resizeCanvas(draggedNode, nodeElement) {
         if (automaticResize) {
+          var canvasResizeThreshold = 200;
+          var canvasResizeStep = 200;
           var canvasElement = modelservice.getCanvasHtmlElement();
-          if (canvasElement.offsetWidth < draggedNode.x + nodeElement.offsetWidth + flowchartConstants.canvasResizeThreshold) {
-            canvasElement.style.width = canvasElement.offsetWidth + flowchartConstants.canvasResizeStep + 'px';
+          if (canvasElement.offsetWidth < draggedNode.x + nodeElement.offsetWidth + canvasResizeThreshold) {
+            canvasElement.style.width = canvasElement.offsetWidth + canvasResizeStep + 'px';
           }
-          if (canvasElement.offsetHeight < draggedNode.y + nodeElement.offsetHeight + flowchartConstants.canvasResizeThreshold) {
-            canvasElement.style.height = canvasElement.offsetHeight + flowchartConstants.canvasResizeStep + 'px';
+          if (canvasElement.offsetHeight < draggedNode.y + nodeElement.offsetHeight + canvasResizeThreshold) {
+            canvasElement.style.height = canvasElement.offsetHeight + canvasResizeStep + 'px';
           }
         }
       }

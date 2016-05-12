@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function fcCanvas(flowchartConstants) {
+  function fcCanvas() {
     return {
       restrict: 'E',
       templateUrl: "flowchart/canvas.html",
@@ -30,14 +30,13 @@
             element.css('height', Math.max(maxY, element.prop('offsetHeight')) + 'px');
           }
         }
-        if (scope.edgeStyle !== flowchartConstants.curvedStyle && scope.edgeStyle !== flowchartConstants.lineStyle) {
+        if (scope.edgeStyle !== 'curved' && scope.edgeStyle !== 'line') {
           throw new Error('edgeStyle not supported.');
         }
         scope.nodeHeight = scope.nodeHeight || 200;
         scope.nodeWidth = scope.nodeWidth || 200;
 
-        scope.flowchartConstants = flowchartConstants;
-        element.addClass(flowchartConstants.canvasClass);
+        element.addClass('workflow-canvas');
         element.on('dragover', scope.dragover);
         element.on('drop', scope.drop);
 
