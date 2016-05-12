@@ -71,11 +71,11 @@
 
 .workflow-node p {
   padding-top: 25px;
-  padding-bottom: 20px;
+  padding-bottom: 15px;
   text-align: center;
 }
 
-.workflow-topConnectors, .workflow-bottomConnectors {
+.workflow-input, .workflow-output {
   position: absolute;
   left: 0;
   width: 100%;
@@ -86,11 +86,11 @@
   z-index: -10;
 }
 
-.workflow-topConnectors {
+.workflow-input {
   top: -40px;
 }
 
-.workflow-bottomConnectors {
+.workflow-output {
   bottom: -40px;
 }
 
@@ -102,11 +102,11 @@
   justify-content: center;
 }
 
-.workflow-topConnectors .workflow-magnet {
+.workflow-input .workflow-magnet {
   align-items: flex-end;
 }
 
-.workflow-bottomConnectors .workflow-magnet {
+.workflow-output .workflow-magnet {
   align-items: flex-start;
 }
 
@@ -249,7 +249,7 @@
   text-align: center;
 }
 
-.fc-topConnectors, .fc-bottomConnectors {
+.fc-input, .fc-output {
   position: absolute;
   left: 0;
   width: 100%;
@@ -260,11 +260,11 @@
   z-index: -10;
 }
 
-.fc-topConnectors {
+.fc-input {
   top: -40px;
 }
 
-.fc-bottomConnectors {
+.fc-output {
   bottom: -40px;
 }
 
@@ -276,11 +276,11 @@
   justify-content: center;
 }
 
-.fc-topConnectors .fc-magnet {
+.fc-input .fc-magnet {
   align-items: flex-end;
 }
 
-.fc-bottomConnectors .fc-magnet {
+.fc-output .fc-magnet {
   align-items: flex-start;
 }
 

@@ -7,13 +7,13 @@
 
     <div class="{{'workflow-input'}}">
       <div fc-magnet
-           ng-repeat="input in modelservice.nodes.inputs">
+           ng-repeat="output in modelservice.nodes.getInputs(node)"></div>
         <div fc-connector></div>
       </div>
     </div>
     <div class="{{'workflow-output'}}">
       <div fc-magnet
-           ng-repeat="output in modelservice.nodes.outputs">
+           ng-repeat="output in modelservice.nodes.getOutputs(node)"></div>
         <div fc-connector></div>
       </div>
     </div>

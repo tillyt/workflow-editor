@@ -89,6 +89,16 @@
       };
 
       modelservice.nodes = {
+        getInputs: function (node) {
+          return Object.keys(node['inputs']);
+        },
+
+        getOutputs: function (node) {
+          console.log(node['outputs'])
+          return Object.keys(node['outputs']);
+        },
+
+
         select: selectObject,
         deselect: deselectObject,
         toggleSelected: toggleSelectedObject,

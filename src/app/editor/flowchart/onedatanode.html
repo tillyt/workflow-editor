@@ -5,10 +5,10 @@
 
   <div class="{{'workflow-input'}}">
     <div fc-connector
-         ng-repeat="input in modelservice.nodes.inputs"></div>
+         ng-repeat="input in modelservice.nodes.getInputs(node)"></div>
   </div>
   <div class="{{'workflow-output'}}">
     <div fc-connector
-         ng-repeat="output in modelservice.nodes.outputs"></div>
+         ng-repeat="output in modelservice.nodes.getOutputs(node)"></div>
   </div>
 </div>

@@ -23,8 +23,8 @@
             element.removeClass('workflow-hover');
           }
         });
-
-        scope.modelservice.connectors.setHtmlElement(scope.connector.id, element[0]);
+//TODO fix me to set element to connector's ID
+        scope.modelservice.connectors.setHtmlElement(scope.connector, element[0]);
       }
     };
   }

@@ -9,7 +9,7 @@
       <i class="fa fa-upload" aria-hidden="true"></i>
       Load
     </a></li>
-    <li><a ng-click="vm.downloadJSON()">
+    <li><a ng-click="main.downloadJSON()">
       <i class="fa fa-download" aria-hidden="true"></i>
       Download
     </a></li>
@@ -21,19 +21,18 @@
   <span class="icon-bar"></span>
   <span class="icon-bar"></span>
 </button>
-<div sidebar="main.showRightSidebar" click-outside="showRightSidebar = false" class="col-xs-7 col-sm-2 col-md-2 sidebar-right sidebar-animate">
-  <ul class="nav navbar-stacked" ng-repeat="category in main.categories">
-    <li><a type="button" class="btn btn-small btn-block" ng-click="menu.selectCategory">{{category | uppercase}}</a></li>
-  </ul>
-</div>
+<!--<div sidebar="main.showRightSidebar" click-outside="showRightSidebar = false" class="col-xs-7 col-sm-2 col-md-2 sidebar-right sidebar-animate">-->
+  <!--<ul class="nav navbar-stacked" ng-repeat="category in main.categories">-->
+    <!--<li><a type="button" class="btn btn-small btn-block" ng-click="menu.selectCategory">{{category | uppercase}}</a></li>-->
+  <!--</ul>-->
+<!--</div>-->
 
 
 
 
-<div class="col-md-10">
 
 
-  <fc-canvas model="main.model" selected-objects="main.selectedItems" edge-style="curved" callbacks="main.callbacks"
+  <fc-canvas model="main.model" selected-objects="main.selectedItems" edge-style="line" callbacks="main.callbacks"
              automatic-resize="true"></fc-canvas>
 
 
@@ -50,4 +49,3 @@
 
 
 
-</div>

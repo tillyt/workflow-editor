@@ -79,7 +79,7 @@
 //TODO move these to model service
 
     main.addNewNode = function (nipype_interface) {
-      var y = 150 * next_node_id;
+      var y = 100 * next_node_id;
       var x = 50 * next_node_id;
       nipype_interface['id'] = next_node_id;
       nipype_interface['x'] = x;

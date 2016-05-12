@@ -6,7 +6,7 @@
     return {
       restrict: 'E',
       templateUrl: '/app/editor/flowchart/node.html',
-      replace: true,
+      replace: false,
       scope: {
         fcCallbacks: '=callbacks',
         callbacks: '=userNodeCallbacks',
