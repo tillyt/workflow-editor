@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, toastrConfig, NodeTemplatePathProvider) {
+  function config($logProvider, toastrConfig) {
     // Enable log
     $logProvider.debugEnabled(true);
 
@@ -17,7 +17,6 @@
     toastrConfig.preventDuplicates = true;
     toastrConfig.progressBar = true;
 
-    NodeTemplatePathProvider.setTemplatePath("path/to/your/template/node.html");
 
   }
 

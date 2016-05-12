@@ -5,7 +5,7 @@
   function fcCanvas() {
     return {
       restrict: 'E',
-      templateUrl: "flowchart/canvas.html",
+      templateUrl: "/app/editor/flowchart//canvas.html",
       replace: true,
       scope: {
         model: "=",
