@@ -61,7 +61,7 @@
       nodeClicked: function(node) {
         return function(event) {
           vm.modelservice.nodes.handleClicked(node, event.ctrlKey);
-          vm.$apply();
+          $rootScope.$apply();
 
           // Don't let the chart handle the mouse down.
           event.stopPropagation();

@@ -6,6 +6,7 @@
     return {
       restrict: 'A',
       link: function(scope, element) {
+        console.log(scope);
         element.attr('draggable', 'true');
 
         element.on('dragover', scope.callbacks.edgeDragoverConnector);
@@ -23,8 +24,7 @@
             element.removeClass('workflow-hover');
           }
         });
-//TODO fix me to set element to connector's ID
-        scope.modelservice.connectors.setHtmlElement(scope.connector, element[0]);
+        scope.modelservice.connectors.setHtmlElement(scope.connector.id, element[0]);
       }
     };
   }

@@ -43,16 +43,24 @@
         edges: []
       };
 
-      var input_dataset = {"inputs": {}, "outputs": {"dataset": null}, "name": "input dataset"};
-      input_dataset['id'] = 0;
-      input_dataset['x'] = 0;
-      input_dataset['y'] = 0;
+      var input_dataset_node = {
+        id: 0,
+        name: 'input dataset',
+        x: 0,
+        y: 0,
+        connectors: [
+          {
+            id: 0,
+            type: 'output',
+            name: 'dataset',
+            value: null
+          }
+        ]
+      };
 
-      main.model.nodes.push(input_dataset);
-
+      main.model.nodes.push(input_dataset_node);
 
       localStorageService.set('model', main.model);
-      console.log('model', main.model);
       return main.model;
     }
 
@@ -81,10 +89,34 @@
     main.addNewNode = function (nipype_interface) {
       var y = 100 * next_node_id;
       var x = 50 * next_node_id;
-      nipype_interface['id'] = next_node_id;
-      nipype_interface['x'] = x;
-      nipype_interface['y'] = y;
-      main.model.nodes.push(nipype_interface);
+      var new_node_obj = {
+        id: next_node_id,
+        name: nipype_interface.name,
+        x: x,
+        y: y,
+        connectors: []
+      };
+      var next_connector_id = 0;
+      angular.forEach(nipype_interface["inputs"], function (val, key) {
+        new_node_obj.connectors.push({
+          type: 'input',
+          id: next_connector_id,
+          name: key,
+          value: val
+        });
+        next_connector_id++;
+      });
+      angular.forEach(nipype_interface["outputs"], function (val, key) {
+        new_node_obj.connectors.push({
+          type: 'output',
+          id: next_connector_id,
+          name: key,
+          value: val
+        });
+        next_connector_id++;
+      });
+
+      main.model.nodes.push(new_node_obj);
       next_node_id++;
       localStorageService.set('model', main.model);
     };
@@ -95,15 +127,13 @@
       // main.model.nodes[nodeID].y = newY;
     };
 
-    main.addNewEdge = function (out_node, outlet, in_node, inlet, startPoint, endPoint) {
+    main.addNewEdge = function (sourceNodeID, sourceOutletID, destinationNodeID, destinationInletNodeID) {
       main.model.edges.push({
         id: next_edge_id,
-        out_node: out_node,
-        outlet: outlet,
-        in_node: in_node,
-        inlet: inlet,
-        startPoint: startPoint,
-        endPoint: endPoint
+        out_node: sourceNodeID,
+        outlet: sourceOutletID,
+        in_node: destinationNodeID,
+        inlet: destinationInletNodeID,
       });
       next_edge_id++;
     };

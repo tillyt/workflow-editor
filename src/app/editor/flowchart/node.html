@@ -5,21 +5,22 @@
 
     <div class="innerNode">
       <p>{{ node.name }}</p>
-{{modelservice.nodes.getConnectorsByType(node, 'output')}}
       <div class="{{'workflow-input'}}">
         <div magnet
              ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'input')"></div>
-        <div connector></div>
+        <div connector>{{connector}}</div>
       </div>
 
 
     <div class="{{'workflow-output'}}">
+
       <div magnet
            ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'output')"></div>
-      <div connector></div>
+      <div connector>{{connector}}</div>
     </div>
 
   </div>
 <div class="nodedelete" ng-click="modelservice.nodes.delete(node)">
   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+</div>
 </div>

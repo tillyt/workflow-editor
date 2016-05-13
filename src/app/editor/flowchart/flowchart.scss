@@ -47,8 +47,8 @@
   align-items: center;
   min-width: 100px;
   border-radius: 5px;
-  border: 0.5px solid #A6A6A6;
-  background-color: #CCCCCC;
+  border: 0.5px solid #afafaf;
+  background-color: #898989;
   color: black;
   font-size: 11px;
 }
@@ -70,6 +70,8 @@
 }
 
 .workflow-node p {
+  padding-left: 20px;
+  padding-right: 20px;
   padding-top: 25px;
   padding-bottom: 15px;
   text-align: center;
@@ -119,8 +121,8 @@
   -webkit-background-clip: padding; /* Safari 4? Chrome 6? */
   background-clip: padding-box;
   border-radius: 50% 50%;
-  background-color: #F7A789;
-  color: #fff;
+  background-color: #000000;
+  color: #afafaf;
 }
 
 .workflow-connector.workflow-hover {
@@ -293,8 +295,8 @@
   -webkit-background-clip: padding; /* Safari 4? Chrome 6? */
   background-clip: padding-box;
   border-radius: 50% 50%;
-  background-color: #F7A789;
-  color: #fff;
+  background-color: #000000;
+  color: #afafaf;
 }
 
 .connector.fc-hover {

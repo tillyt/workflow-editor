@@ -89,30 +89,10 @@
       };
 
       modelservice.nodes = {
-        getConnectorsByType: function(node, type){
-          var connectors = [];
-          angular.forEach(node['outputs'], function (val, key) {
-            connectors.push({
-              type: 'output',
-              id: 1,
-              name: key,
-              value: val
-            });
+        getConnectorsByType: function(node, type) {
+          return node.connectors.filter(function(connector) {
+            return connector.type === type;
           });
-          angular.forEach(node['inputs'], function (val, key) {
-            connectors.push({
-              type: 'input',
-              id: 1,
-              name: key,
-              value: val
-            });
-          });
-          return connectors.filter(function(connector) {
-              return connector.type === type
-          });
-
-
-
         },
 
 
@@ -122,15 +102,7 @@
         toggleSelected: toggleSelectedObject,
         isSelected: isSelectedObject,
 
-        _addConnector: function(node, connector) {
-          node.connectors.push(connector);
-          // try {
-          //   Modelvalidation.validateNode(node);
-          // } catch (error) {
-          //   node.connectors.splice(node.connectors.indexOf(connector), 1);
-          //   throw error;
-          // }
-        },
+
 
         delete: function(node) {
           if (this.isSelected(node)) {
@@ -203,8 +175,7 @@
         toggleSelected: toggleSelectedObject,
         isSelected: isSelectedObject,
 
-        delete: function
-          (edge) {
+        delete: function (edge) {
           var index = model.edges.indexOf(edge);
           if (index === -1) {
             throw new Error('Tried to delete not existing edge')

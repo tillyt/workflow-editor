@@ -1,24 +1,26 @@
 <nav class="navbar navbar-fixed-top navbar-default">
-  <div class="nav navbar-nav row">
-    <div class="col-md-10">
-      <a href="http://nipy.org/nipype/" class="pull-left"><img height="50" src="assets/images/nipy.png"></a>
-      <span class="navbar-brand pull-left">Nipype Workflow Editor </span>
-      <button type="button" class="btn btn-link" ng-click="">
-        <!--TODO-->
-        <i class="fa fa-upload" aria-hidden="true"></i>
-        Load
-      </button>
-      <button type="button" class="btn btn-md btn-link" ng-click="main.downloadJSON()">
-        <i class="fa fa-download" aria-hidden="true"></i>
-        Download
-      </button>
-    </div>
-    <div class="col-md-2">
+  <div class="nav navbar-nav row container-fluid">
+    <div class="row">
+      <div class="col-sm-10">
+        <a href="http://nipy.org/nipype/" class="pull-left"><img height="50" src="assets/images/nipy.png"></a>
+        <span class="navbar-brand pull-left">Nipype Workflow Editor </span>
+        <button type="button" class="btn btn-link" ng-click="">
+          <i class="fa fa-upload" aria-hidden="true"></i>
+          Load<!--TODO-->
+        </button>
+        <button type="button" class="btn btn-md btn-link" ng-click="main.downloadJSON()">
+          <i class="fa fa-download" aria-hidden="true"></i>
+          Download
+        </button>
+      </div>
+      <div class="col-sm-2">
 
-      <button ng-click="main.showRightSidebar = true"
-              class="pull-right btn btn-success btn-md btn-block" type="button">
-        Add Node
-      </button>
+        <button ng-click="main.showRightSidebar = !main.showRightSidebar"
+                class="pull-right btn btn-success btn-md btn-block" type="button">
+          Add Node
+        </button>
+      </div>
+
     </div>
   </div>
 </nav>
@@ -30,8 +32,8 @@
   <span class="icon-bar"></span>
 </button>
 
-<div sidebar="main.showRightSidebar" click-outside="main.showRightSidebar = false"
-     class="col-xs-2 col-sm-2 col-md-2 sidebar-right sidebar-animate">
+<div sidebar="main.showRightSidebar"
+     class="col-xs-2 col-xs-offset-10 sidebar-right sidebar-animate">
 
   <form role="search">
     <div class="form-group">
@@ -61,8 +63,14 @@
 </div>
 
 
-<workflow-canvas model="main.model" selected-objects="main.selectedItems" edge-style="line" callbacks="main.callbacks"
-           automatic-resize="true"></workflow-canvas>
+<div class="col-md-10">
+
+  <workflow-canvas model="main.model" selected-objects="main.selectedItems" edge-style="line" callbacks="main.callbacks"
+                   automatic-resize="true"></workflow-canvas>
+
+</div>
+
+
 
 
 <!--<workflow-->
