@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function connector() {
+  function nodeConnector() {
     return {
       restrict: 'A',
       link: function(scope, element) {
@@ -24,13 +24,14 @@
             element.removeClass('workflow-hover');
           }
         });
-        scope.modelservice.connectors.setHtmlElement(scope.connector.id, element[0]);
+        //TODO
+        scope.modelservice.connectors.setHtmlElement(0, element[0]);
       }
     };
   }
 
   angular
     .module('workflowEditor')
-    .directive('connector', connector);
+    .directive('nodeConnector',nodeConnector);
 
 }());

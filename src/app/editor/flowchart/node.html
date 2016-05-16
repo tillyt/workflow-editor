@@ -8,7 +8,7 @@
       <div class="{{'workflow-input'}}">
         <div magnet
              ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'input')"></div>
-        <div connector>{{connector}}</div>
+        <div node-connector></div>
       </div>
 
 
@@ -16,11 +16,11 @@
 
       <div magnet
            ng-repeat="connector in modelservice.nodes.getConnectorsByType(node, 'output')"></div>
-      <div connector>{{connector}}</div>
+      <div node-connector></div>
     </div>
 
   </div>
-<div class="nodedelete" ng-click="modelservice.nodes.delete(node)">
+<div class="nodedelete" ng-click="vm.modelservice.nodes.delete(node)">
   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 </div>
 </div>

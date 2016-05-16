@@ -4,11 +4,11 @@
   <p>{{ node.name }}</p>
 
   <div class="{{'workflow-input'}}">
-    <div connector
-         ng-repeat="input in modelservice.nodes.getInputs(node)"></div>
+    <div node-connector
+         ng-repeat="input in modelservice.nodes.getConnectorsByType(node, 'input')"></div>
   </div>
   <div class="{{'workflow-output'}}">
-    <div connector
-         ng-repeat="output in modelservice.nodes.getOutputs(node)"></div>
+    <div node-connector
+         ng-repeat="output in modelservice.nodes.getConnectorsByType(node, 'output')"></div>
   </div>
 </div>
