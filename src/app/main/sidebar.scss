@@ -25,14 +25,21 @@
 .sidebar {
   position: fixed;
   display: block;
-  top: 51px;
+  top: 65px;
   bottom: 0;
   z-index: 1000;
   min-height: 100%;
   max-height: none;
   overflow: auto;
   text-align: right;
+  .btn {
+    text-align: center;
+    font-size: 11px;
+    margin: 1px;
+  }
 }
+
+
 
 .sidebar-left {
   left: 0;
