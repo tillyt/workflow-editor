@@ -26,6 +26,7 @@
         return function(event) {
           edgeDragging.isDragging = true;
           draggedEdgeSource = connector;
+          console.log(connector);
           edgeDragging.dragPoint1 = modelservice.connectors.getCenteredCoord(connector.id);
 
           var canvas = modelservice.getCanvasHtmlElement();

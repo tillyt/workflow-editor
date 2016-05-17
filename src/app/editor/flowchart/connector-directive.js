@@ -6,15 +6,16 @@
     return {
       restrict: 'A',
       link: function(scope, element) {
-        console.log(scope);
+        var connector = scope.output || scope.input;
+        var id = connector.id;
         element.attr('draggable', 'true');
 
         element.on('dragover', scope.callbacks.edgeDragoverConnector);
-        element.on('drop', scope.callbacks.edgeDrop(scope.connector));
+        element.on('drop', scope.callbacks.edgeDrop(connector));
         element.on('dragend', scope.callbacks.edgeDragend);
-        element.on('dragstart', scope.callbacks.edgeDragstart(scope.connector));
-        element.on('mouseenter', scope.callbacks.connectorMouseEnter(scope.connector));
-        element.on('mouseleave', scope.callbacks.connectorMouseLeave(scope.connector));
+        element.on('dragstart', scope.callbacks.edgeDragstart(connector));
+        element.on('mouseenter', scope.callbacks.connectorMouseEnter(connector));
+        element.on('mouseleave', scope.callbacks.connectorMouseLeave(connector));
 
         element.addClass('workflow-connector');
         scope.$watch('mouseOverConnector', function(value) {
@@ -24,8 +25,7 @@
             element.removeClass('workflow-hover');
           }
         });
-        //TODO
-        scope.modelservice.connectors.setHtmlElement(0, element[0]);
+        scope.modelservice.connectors.setHtmlElement(id, element[0]);
       }
     };
   }
