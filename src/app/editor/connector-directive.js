@@ -14,6 +14,7 @@
         element.on('drop', scope.callbacks.edgeDrop(connector));
         element.on('dragend', scope.callbacks.edgeDragend);
         element.on('dragstart', scope.callbacks.edgeDragstart(connector));
+        console.log(connector);
         element.on('mouseenter', scope.callbacks.connectorMouseEnter(connector));
         element.on('mouseleave', scope.callbacks.connectorMouseLeave(connector));
 

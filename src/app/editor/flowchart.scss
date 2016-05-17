@@ -12,13 +12,15 @@
 
 .workflow-node {
   z-index: 1;
+  position: relative;
 }
 
 .innerNode {
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
-  min-width: 100px;
+  min-width: 200px;
   border-radius: 5px;
   border: 0.5px solid #898989;
   background-color: #afafaf;
@@ -44,8 +46,8 @@
 .workflow-node p {
   padding-left: 20px;
   padding-right: 20px;
-  padding-top: 25px;
-  padding-bottom: 15px;
+  padding-top: 15px;
+  padding-bottom: 5px;
   text-align: center;
 }
 

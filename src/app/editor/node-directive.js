@@ -5,7 +5,7 @@
   function node() {
     return {
       restrict: 'E',
-      templateUrl: '/app/editor/flowchart/node.html',
+      templateUrl: '/app/editor/node.html',
       replace: true,
       scope: {
         callbacks: '=callbacks',
