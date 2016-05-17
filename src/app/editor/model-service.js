@@ -2,15 +2,11 @@
 
   'use strict';
 
-  function Modelfactory(Modelvalidation) {
+  function Modelfactory() {
     var connectorsHtmlElements = {};
     var canvasHtmlElement = null;
 
     return function innerModelfactory(model, selectedObjects, edgeAddedCallback) {
-      // TODO fix model validation then uncomment calling this
-      // Modelvalidation.validateModel(model);
-
-
 
       var modelservice = {
         selectedObjects: selectedObjects
@@ -144,13 +140,6 @@
 
         _addNode: function(node) {
           model.nodes.push(node);
-
-          // try {
-          //   Modelvalidation.validateNodes(model.nodes);
-          // } catch(error) {
-          //   model.nodes.splice(model.nodes.indexOf(node), 1);
-          //   throw error;
-          // }
         },
 
         getConnectorIds: function(node) {
@@ -202,10 +191,7 @@
         },
 
         _addEdge: function(sourceConnector, destConnector) {
-          //Modelvalidation.validateConnector(sourceConnector);
-          //Modelvalidation.validateConnector(destConnector);
           var edge = {source: sourceConnector.id, destination: destConnector.id};
-          //Modelvalidation.validateEdges(model.edges.concat([edge]), model.nodes);
           model.edges.push(edge);
           edgeAddedCallback(edge);
         }

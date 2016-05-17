@@ -28,11 +28,11 @@
 
         element.addClass('workflow-node');
 
-        function myToggleClass(clazz, set) {
+        function myToggleClass(cls, set) {
           if (set) {
-            element.addClass(clazz);
+            element.addClass(cls);
           } else {
-            element.removeClass(clazz);
+            element.removeClass(cls);
           }
         }
 

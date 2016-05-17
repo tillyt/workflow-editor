@@ -1,11 +1,11 @@
-(function() {
+(function () {
 
   'use strict';
 
-  function Edgedraggingfactory(Modelvalidation) {
+  function Edgedraggingfactory() {
     function factory(modelservice, model, edgeDragging, isValidEdgeCallback, applyFunction) {
       if (isValidEdgeCallback === null) {
-        isValidEdgeCallback = function() {
+        isValidEdgeCallback = function () {
           return true;
         };
       }
@@ -22,8 +22,8 @@
       var destinationHtmlElement = null;
       var oldDisplayStyle = "";
 
-      edgedraggingService.dragstart = function(connector) {
-        return function(event) {
+      edgedraggingService.dragstart = function (connector) {
+        return function (event) {
           edgeDragging.isDragging = true;
           draggedEdgeSource = connector;
           console.log(connector);
@@ -55,9 +55,9 @@
         };
       };
 
-      edgedraggingService.dragover = function(event) {
+      edgedraggingService.dragover = function (event) {
         if (edgeDragging.isDragging) {
-          return applyFunction(function() {
+          return applyFunction(function () {
             if (destinationHtmlElement !== null) {
               destinationHtmlElement.style.display = oldDisplayStyle;
             }
@@ -71,22 +71,15 @@
         }
       };
 
-      edgedraggingService.dragoverConnector = function(connector) {
-        return function(event) {
+      edgedraggingService.dragoverConnector = function (connector) {
+        return function (event) {
           if (edgeDragging.isDragging) {
             edgedraggingService.dragover(event);
-            try {
-              Modelvalidation.validateEdges(model.edges.concat([{
-                source: draggedEdgeSource.id,
-                destination: connector.id
-              }]), model.nodes);
-            } catch (error) {
-              if (error instanceof Modelvalidation.ModelvalidationError) {
-                return true;
-              } else {
-                throw error;
-              }
-            }
+            model.edges.concat([{
+              source: draggedEdgeSource.id,
+              destination: connector.id
+            }]);
+
             if (isValidEdgeCallback(draggedEdgeSource, connector)) {
               event.preventDefault();
               event.stopPropagation();
@@ -96,24 +89,18 @@
         };
       };
 
-      edgedraggingService.dragoverMagnet = function(connector) {
-        return function(event) {
+      edgedraggingService.dragoverMagnet = function (connector) {
+        console.log(connector);
+        return function (event) {
           if (edgeDragging.isDragging) {
             edgedraggingService.dragover(event);
-              try {
-              Modelvalidation.validateEdges(model.edges.concat([{
-                source: draggedEdgeSource.id,
-                destination: connector.id
-              }]), model.nodes);
-            } catch (error) {
-              if (error instanceof Modelvalidation.ModelvalidationError) {
-                return true;
-              } else {
-                throw error;
-              }
-            }
+            model.edges.concat([{
+              source: draggedEdgeSource.id,
+              destination: connector.id
+            }]);
+
             if (isValidEdgeCallback(draggedEdgeSource, connector)) {
-              return applyFunction(function() {
+              return applyFunction(function () {
                 edgeDragging.dragPoint2 = modelservice.connectors.getCenteredCoord(connector.id);
                 event.preventDefault();
                 event.stopPropagation();
@@ -125,7 +112,7 @@
         }
       };
 
-      edgedraggingService.dragend = function(event) {
+      edgedraggingService.dragend = function (event) {
         if (edgeDragging.isDragging) {
           edgeDragging.isDragging = false;
           edgeDragging.dragPoint1 = null;
@@ -134,21 +121,13 @@
         }
       };
 
-      edgedraggingService.drop = function(targetConnector) {
-        return function(event) {
+      edgedraggingService.drop = function (targetConnector) {
+        return function (event) {
           if (edgeDragging.isDragging) {
-            try {
-              Modelvalidation.validateEdges(model.edges.concat([{
-                source: draggedEdgeSource.id,
-                destination: targetConnector.id
-              }]), model.nodes);
-            } catch (error) {
-              if (error instanceof Modelvalidation.ModelvalidationError) {
-                return true;
-              } else {
-                throw error;
-              }
-            }
+            model.edges.concat([{
+              source: draggedEdgeSource.id,
+              destination: targetConnector.id
+            }]);
             if (isValidEdgeCallback(draggedEdgeSource, targetConnector)) {
               modelservice.edges._addEdge(draggedEdgeSource, targetConnector);
               event.stopPropagation();
