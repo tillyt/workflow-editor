@@ -17,8 +17,8 @@
 
 .innerNode {
   display: flex;
-/*  position: absolute;
-*/  /*position: relative;*/
+  /*position: absolute;*/
+  position: relative;
   justify-content: center;
   align-items: center;
   /*min-width: 100px;*/
@@ -28,8 +28,8 @@
   background-color: #afafaf;
   color: black;
   font-size: 11px;
-  /*flex-direction: column;*/
-  /*max-height: 50px;*/
+  flex-direction: column;
+  max-height: 50px;
 }
 
 .workflow-node.workflow-hover {
@@ -47,7 +47,8 @@
   cursor: move;
 }
 
-.workflow-node p {    
+.workflow-node p { 
+  top: 0px;   
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 15px;
@@ -59,6 +60,7 @@
   position: relative;
   left: 0;
   width: 100%;
+  min-height: 60px;
 
   display: inline-flex;
   flex-direction: row;
@@ -67,11 +69,11 @@
 }
 
 .workflow-input {
-  top: -50px;
+  top: -10px;
 }
 
 .workflow-output {
-  bottom: -50px;
+  bottom: -10px;
 }
 
 .workflow-magnet {

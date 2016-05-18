@@ -4,7 +4,9 @@
   ng-dblclick="callbacks.doubleClick($event)">
 
   <div class="innerNode">
-    <p>{{ node.name }}</p>
+    <div class="node-name">
+      <p>{{ node.name }}</p>
+    </div>
     <div class="workflow-input">
       <div magnet
            ng-repeat="input in modelservice.nodes.getConnectorsByType(node, 'input')">
