@@ -12,20 +12,24 @@
 
 .workflow-node {
   z-index: 1;
-  position: relative;
+  width: auto;
 }
 
 .innerNode {
   display: flex;
-  position: relative;
+/*  position: absolute;
+*/  /*position: relative;*/
   justify-content: center;
   align-items: center;
-  min-width: 100px;
+  /*min-width: 100px;*/
+  width: auto;
   border-radius: 5px;
   border: 0.5px solid #898989;
   background-color: #afafaf;
   color: black;
   font-size: 11px;
+  /*flex-direction: column;*/
+  /*max-height: 50px;*/
 }
 
 .workflow-node.workflow-hover {
@@ -43,7 +47,7 @@
   cursor: move;
 }
 
-.workflow-node p {
+.workflow-node p {    
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 15px;
@@ -52,11 +56,11 @@
 }
 
 .workflow-input, .workflow-output {
-  position: absolute;
+  position: relative;
   left: 0;
   width: 100%;
 
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
 
   z-index: -10;
@@ -89,7 +93,6 @@
 .workflow-connector {
   width: 20px;
   height: 20px;
-  //border: 3px solid black;
   border: 5px solid transparent;
   -moz-background-clip: padding; /* Firefox 3.6 */
   -webkit-background-clip: padding; /* Safari 4? Chrome 6? */
