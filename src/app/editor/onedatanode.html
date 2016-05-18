@@ -1,0 +1,14 @@
+<div
+  id="{{node.id}}"
+  ng-attr-style="position: absolute; top: {{ node.y }}px; left: {{ node.x }}px; background: {{ node.color }}; border-color: {{node.borderColor}}">
+  <p>{{ node.name }}</p>
+
+  <div class="{{'workflow-input'}}">
+    <div node-connector
+         ng-repeat="input in modelservice.nodes.getConnectorsByType(node, 'input')"></div>
+  </div>
+  <div class="{{'workflow-output'}}">
+    <div node-connector
+         ng-repeat="output in modelservice.nodes.getConnectorsByType(node, 'output')"></div>
+  </div>
+</div>

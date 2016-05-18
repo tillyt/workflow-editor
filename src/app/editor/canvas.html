@@ -1,0 +1,27 @@
+<div class="col-md-10" ng-click="vm.canvasClick($event)">
+  <svg>
+    <g ng-repeat="edge in vm.model.edges">
+      <path
+        ng-click="vm.edgeClick($event, edge)"
+        ng-dblclick="vm.edgeDoubleClick($event, edge)"
+        ng-mouseover="vm.edgeMouseOver($event, edge)"
+        ng-mouseenter="vm.edgeMouseEnter($event, edge)"
+        ng-mouseleave="vm.edgeMouseLeave($event, edge)"
+        ng-attr-class="{{(vm.modelservice.edges.isSelected(edge) && 'workflow-selected + ' ' + 'workflow-edge') || edge === vm.mouseOver.edge && 'workflow-hover' + ' ' + 'workflow-edge' || edge.active && 'workflow-active' + ' ' + 'workflow-edge' || 'workflow-edge'}}"
+        ng-attr-d="{{vm.getEdgeDAttribute(vm.modelservice.edges.sourceCoord(edge), vm.modelservice.edges.destCoord(edge), vm.edgeStyle)}}"></path>
+    </g>
+    <g ng-if="vm.edgeDragging.isDragging">
+      <path class="{{ 'workflow-edge' }} {{ 'workflow-dragging' }}"
+            ng-attr-d="{{vm.getEdgeDAttribute(vm.edgeDragging.dragPoint1, vm.edgeDragging.dragPoint2, vm.edgeStyle)}}"></path>
+      <circle class="edge-endpoint" r="4" ng-attr-cx="{{vm.edgeDragging.dragPoint2.x}}"
+              ng-attr-cy="{{vm.edgeDragging.dragPoint2.y}}"></circle>
+    </g>
+  </svg>
+  <node selected="vm.modelservice.nodes.isSelected(node)" under-mouse="node === vm.mouseOver.node" node="node"
+           mouse-over-connector="vm.mouseOver.connector"
+           modelservice="vm.modelservice"
+           dragged-node="vm.nodeDragging.draggedNode"
+           callbacks="vm.callbacks"
+           node-callbacks="vm.nodeCallbacks"
+           ng-repeat="node in vm.model.nodes"></node>
+</div>
