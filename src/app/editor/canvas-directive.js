@@ -5,7 +5,7 @@
   function workflowCanvas() {
     return {
       restrict: 'E',
-      templateUrl: "/app/editor/canvas.html",
+      templateUrl: "app/editor/canvas.html",
       replace: true,
       scope: {
         model: "=",
